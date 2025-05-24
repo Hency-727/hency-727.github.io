@@ -1,0 +1,496 @@
+<!--
+ Copyright 2025 Hency
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+     https://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hency | Robotics Research Assistant</title>
+<!-- Ionicons CDN -->
+<script src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" type="module"></script>
+<script nomodule="" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="night.css" id="theme-style" rel="stylesheet"/>
+<style>
+      #svgImage {
+        width: 20px;
+        height: 20px;
+        cursor: pointer; /* 鼠标悬停时显示手型，提示可点击 */
+
+    }
+    
+      #chinasvgImage{
+        width: 20px;
+        height: 20px;
+        cursor: pointer; /* 鼠标悬停时显示手型，提示可点击 */
+      }
+
+      #usasvgImage{
+        width: 20px;
+        height: 20px;
+        cursor: pointer; /* 鼠标悬停时显示手型，提示可点击 */
+      }
+
+    </style>
+<style>
+      /* 去除所有 a 标签默认下划线 */
+      #svg-container a {
+        text-decoration: none;
+      }
+
+      /* 鼠标悬停时也不显示下划线 */
+      #svg-container a:hover,
+      #svg-container a:focus {
+        text-decoration: none;
+      }
+    </style>
+<style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto Mono', monospace; }
+
+        .container { max-width: 960px; margin: auto; }
+
+        header {
+        text-align: center;
+        margin-bottom: 40px;
+        }
+
+        .avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 3px solid #00f2fe;
+        object-fit: cover;
+        margin-bottom: 15px;
+        }
+
+        h1 {
+        font-size: 2.5em;
+        background: linear-gradient(to right, #00f260, #0575e6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        }
+
+
+        .section {
+        background: #222;
+        padding: 25px;
+        margin-top: 30px;
+        border-left: 5px solid #00f2fe;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        scroll-margin-top: 30px; /* Modern way: 推荐 */
+
+        }
+        .section h2 {
+        color: #00f2fe;
+        margin-bottom: 10px;
+        }
+
+        .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 10px;
+        background: #00f260;
+        color: #000;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: 0.3s ease;
+        }
+
+        .btn:hover { background: #05c46b; }
+
+        .projects {
+        display: grid;
+        gap: 15px;
+        grid-template-columns: 1fr 1fr;
+        }
+
+        .project, .portfolio {
+        background: #333;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 3px solid #00f260;
+        }
+
+        .project h3, .portfolio h3 {
+        color: #00f2fe;
+        margin-bottom: 5px;
+        }
+
+        a { color: #00f2fe; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        footer {
+        text-align: center;
+        font-size: 0.9em;
+        color: #aaa;
+        margin-top: 60px;
+        }
+
+        @media(max-width: 700px) {
+        .projects { grid-template-columns: 1fr; }
+        }
+
+        html {
+          scroll-behavior: smooth;
+        }
+        
+    </style>
+</head>
+<body>
+<!-- 导航栏 -->
+<!-- <nav 
+    style="
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #333;
+      padding: 10px 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      z-index: 1000;
+      text-align: center;
+      font-family: 'Times New Roman', serif;
+      font-size: 20px;
+    "> -->
+<nav style="
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: #333;
+        padding: 10px 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        z-index: 1000;
+        font-family: 'Times New Roman', serif;
+        font-size: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      ">
+<div id="svg-container" style="flex: 3;">
+<img id="svgImage" src="logo/moon.svg"/>
+        |
+        <!-- 美国国旗，跳转英文页面 -->
+<a href="https://hency-727/github.io">
+<img id="usasvgImage" src="logo/usa.png" style="width:24px; height:auto;"/>
+</a>
+        |
+        <a href="https://hency-727/github.io/chinese-version.html">
+<img id="chinasvgImage" src="logo/china.png" style="width:24px; height:auto;"/>
+</a>
+</div>
+<div style="flex: 5;">
+<a href="#HomePage" style="margin-right: 20px; font-weight: bold; font-family: 'Times New Roman';">主页</a>
+<a href="#About Me" style="margin-right: 20px; font-family: 'Times New Roman';">关于我</a>
+<a href="#Selected Projects" style="margin-right: 20px; font-family: 'Times New Roman';">精选项目</a>
+<!-- <a href="#Personal Resume" style="margin-right: 20px; font-family: 'Times New Roman';">Personal Resume</a> -->
+<a href="#Publications" style="margin-right: 20px; font-family: 'Times New Roman';">学术发表</a>
+<a href="#Competitions" style="margin-right: 20px; font-family: 'Times New Roman';">竞赛经历</a>
+<a href="#Internship Report" style="margin-right: 20px; font-family: 'Times New Roman';">实习总结</a>
+<a href="#Graduated Paper" style="margin-right: 20px; font-family: 'Times New Roman';">毕业设计</a>
+<!-- <a href="/chinese/" style="color: white;">简体中文</a> -->
+</div>
+<!-- <a href="#" onclick="switchToChinese()">中文</a> -->
+</nav>
+<div class="container" id="HomePage">
+<header>
+<img alt="Hency Avatar" class="avatar" src="me.jpeg" style="margin-top: 60px;">
+<h1>Hency</h1>
+<div class="motto">"Let robots do the dull, dirty, and dangerous."</div>
+<div class="motto">"顽强的海盗从不需要灯塔."</div>
+<!-- 图标区域 -->
+<div style="margin-top: 20px; display: flex; justify-content: center; gap: 30px; align-items: center;">
+<!-- GitHub -->
+<a href="https://github.com/Hency-727" target="_blank" title="GitHub">
+<ion-icon name="logo-github" style="font-size: 36px;"></ion-icon>
+</a>
+<!-- Gmail -->
+<a href="mailto:hengxiangchen428@gmail.com" title="Gmail">
+<ion-icon name="mail-outline" style="font-size: 36px;"></ion-icon>
+</a>
+<!-- WeChat -->
+<span onclick="toggleQRCode()" style="cursor: pointer;" title="WeChat">
+<ion-icon name="logo-wechat" style="font-size: 36px;color: #00f2fe"></ion-icon>
+</span>
+</div>
+<!-- 隐藏的二维码 -->
+<div id="wechat-qr" style="display: none; margin-top: 20px;">
+<img alt="WeChat QR" src="resource/hency-qrcode.png" style="width: 120px; border-radius: 10px;">
+<div style="font-size: 0.9em;">扫描二维码添加微信</div>
+</img></div>
+</img></header>
+<!-- 脚本功能 -->
+<script>
+        function toggleQRCode() {
+        const qr = document.getElementById("wechat-qr");
+        qr.style.display = qr.style.display === "none" ? "block" : "none";
+        }
+    </script>
+<!-- <script>
+      function toggleTheme() {
+        var themeStyle = document.getElementById('theme-style');
+
+        if (themeStyle.getAttribute('href') === 'day.css') {
+          themeStyle.setAttribute('href', 'night.css');
+        } else {
+          themeStyle.setAttribute('href', 'day.css');
+        }
+      }
+    </script> -->
+<script>
+      let isFirst = true;
+      var themeStyle = document.getElementById('theme-style');
+      document.getElementById("svgImage").addEventListener("click", function () {
+        this.src = isFirst ? "logo/sun.svg" : "logo/moon.svg";
+        isFirst = !isFirst;
+        if (themeStyle.getAttribute('href') === 'day.css') {
+          themeStyle.setAttribute('href', 'night.css');
+        } else {
+          themeStyle.setAttribute('href', 'day.css');
+        }
+      });
+    </script>
+<!-- <div class="section" id="About Me">
+      <h2>🧑‍💼 About Me</h2>
+      <p>
+        I’m a research assistant in Robotics, focusing on robot learning, adaptive control, and human-robot collaboration. 
+        I love integrating AI with physical systems to build intelligent, autonomous machines.
+      </p>
+      <p>
+        Education: Research Assistant in Robotics, 
+        <a href="https://www.sztu.edu.cn/" target="_blank">Shenzhen Technology University</a><br>
+        
+        Current Lab:
+        <a href="https://tusz-agdr.github.io" target="_blank">Arbeit Gruppe Dexterous Robotics(AGDR) Lab</a><br>
+        Interests: Reinforcement Learning, Control Theory, HRI
+      </p>      
+        </div> -->
+<!-- <p style="font-weight: bold; color: darkblue;">
+          Education: Research Assistant in Robotics, 
+          <a href="https://www.sztu.edu.cn/" target="_blank" style="color: teal;">Shenzhen Technology University</a><br>
+        
+          Current Lab:
+          <a href="https://tusz-agdr.github.io" target="_blank" style="color: teal;">Arbeit Gruppe Dexterous Robotics(AGDR) Lab</a><br>
+        
+          Interests: <span style="color: darkred;">Reinforcement Learning</span>, 
+          <span style="color: darkgreen;">Control Theory</span>, 
+          <span style="color: purple;">HRI</span>
+        </p> -->
+<div class="section" id="About Me" style="display: flex; gap: 40px;">
+<!-- 左边 70% 内容 -->
+<div style="flex: 8;">
+<h2>🧑‍💼 About Me</h2>
+<p style="font-size: 20px; font-family: 'Times New Roman';">我是一名机器人方向的研究助理。</p>
+<br/><br/> <!-- 空一行效果 -->
+<p style="font-size: 22px; font-family: 'Times New Roman'; color: #FFD700;">教育背景：</p>
+<p style="font-size: 18px; font-family: 'Times New Roman';">研究助理：<a href="https://www.sztu.edu.cn/" style="font-family: 'Times New Roman';" target="_blank">Shenzhen Technology University(SZTU)</a>, 08.2024 - present<br/>本科生：<a href="https://www.sztu.edu.cn/" style="font-family: 'Times New Roman';" target="_blank">Shenzhen Technology University(SZTU)</a>, 09.2021 - present<br/>交换生：<a href="https://www.hs-coburg.de/" style="font-family: 'Times New Roman';" target="_blank">Hochschule Coburg</a>, 03.2024 - 08.2024<br/>所在实验室：<a href="https://tusz-agdr.github.io" style="font-family: 'Times New Roman';" target="_blank">Arbeit Gruppe Dexterous Robotics(AGDR) Lab</a>, 09.2021 - present<br/>
+</p>
+<br/><br/> <!-- 空一行效果 -->
+<p style="font-size: 22px; font-family: 'Times New Roman'; color: #FFD700;">研究兴趣：</p>
+<p style="font-size: 18px; font-family: 'Times New Roman';">移动操作、SLAM、VLA</p>
+</div>
+<!-- 右边 30% 简历内容 -->
+<div style="flex: 2.5;">
+<br/><br/> <!-- 空一行效果 -->
+<br/><br/> <!-- 空一行效果 -->
+<br/><br/> <!-- 空一行效果 -->
+<!-- <h2 style="font-size: 20px;">📄 Personal Resume</h2> -->
+<!-- <p>You can download my full academic CV here:</p> -->
+<a class="btn" download="" href="resource/CV_of_Hengxiang_Chen.pdf" style="padding: 10px 20px; background: #007bff; color: white; border-radius: 8px; text-decoration: none; font-weight: bold; font-family: 'Times New Roman'">
+<img id="svgImage" src="logo/download.svg"/>下载简历</a>
+</div>
+</div>
+<!-- <div class="section">
+      <h2>📚 Portfolio PDFs</h2>
+      <div class="projects">
+        <div class="portfolio">
+          <h3>Robot Arm Trajectory Planning</h3>
+          <a href="portfolio-trajectory.pdf" target="_blank">View PDF</a>
+        </div>
+        <div class="portfolio">
+          <h3>Human-Robot Interaction Toolkit</h3>
+          <a href="portfolio-hri.pdf" target="_blank">View PDF</a>
+        </div>
+      </div>
+    </div> -->
+<div class="section" id="Selected Projects">
+<h2>🛠️ Selected Projects</h2>
+<div class="projects">
+<div class="project">
+<h3></h3>
+<p></p>
+<video controls="" width="320">
+<source src="resource/videos/G29_steering_wheel_display.mp4" type="video/mp4"/>您的浏览器不支持视频标签。</video>
+<a href="https://github.com/hency/robonav" target="_blank"></a>
+</div>
+<div class="project">
+<h3></h3>
+<p></p>
+<video controls="" width="320">
+<source src="resource/videos/moblie manipulation.mp4" type="video/mp4"/>您的浏览器不支持视频标签。</video>
+<a href="https://github.com/hency/robonav" target="_blank"></a>
+</div>
+<div class="project">
+<h3></h3>
+<p></p>
+<video controls="" width="320">
+<source src="resource/videos/NCSC2023GDD2MUV.mp4" type="video/mp4"/>您的浏览器不支持视频标签。</video>
+<a href="https://github.com/hency/robonav" target="_blank"></a>
+</div>
+</div>
+</div>
+<div class="section" id="Publications">
+<h2>📚 Publications </h2>
+<!-- <div class="project" style="display: flex; gap: 20px; align-items: center; margin-bottom: 30px;">
+        <img src="resource/Path_Planning_Algorithm_Comparison_Analysis_for_Wireless_AUVs_Energy_Sharing_System.png" alt="RoboNav Preview" style="width: 200px; border-radius: 10px; object-fit: cover;" />
+            <div>
+                <h3 style="margin-top: 0;">RoboNav</h3>
+                <p>Autonomous indoor navigation for service robots. Integrates SLAM, obstacle avoidance, and deep reinforcement learning.</p>
+                <a href="https://github.com/hency/robonav" target="_blank">View on GitHub</a>
+            </div>
+      </div> -->
+<div class="project" style="display: flex; gap: 20px; align-items: center; margin-bottom: 30px;">
+<a download="" href="resource/pdf/Path_Planning_Algorithm_Comparison_Analysis_for_Wireless_AUVs_Energy_Sharing_System.pdf">
+<img src="resource/Path_Planning_Algorithm_Comparison_Analysis_for_Wireless_AUVs_Energy_Sharing_System.png" style="width: 200px; border-radius: 10px; object-fit: cover;">
+</img></a>
+<div>
+<h3 style="margin-top: 0;text-align: center; font-family: 'Times New Roman'; font-size: 22px;">Path Planning Algorithm Comparison Analysis for Wireless AUVs Energy Sharing System</h3>
+<p style="font-size: 20px; font-family: 'Times New Roman';">In this research, we proposes a wireless AUV energy sharing system for underwater recharging,
+          focuses on path planning to navigate from supplier AUV to consumer AUV in complex underwater environments,
+          we evaluate and compare path length、energy consumption and time/space complexity of RRT* and PSO algorithms
+          under different scenarios (static obstacles and dynamic obstacles、common conditions and narrow area).
+        </p>
+<a href="https://github.com/Hency-727/Algorithm_Comparison_RRTstar_and_PSO" style="font-size: 15px; font-family: 'Times New Roman';" target="_blank">查看 GitHub 页面</a>
+<br/>
+<a href="https://arxiv.org/abs/2203.03092" style="font-size: 15px; font-family: 'Times New Roman';" target="_blank">论文链接</a>
+</div>
+</div>
+<div class="project" style="display: flex; gap: 20px; align-items: center; margin-bottom: 30px;">
+<a download="" href="resource/pdf/Cross-Modal Robotic Perception for-poster.pdf">
+<img src="resource/Cross-Modal Robotic Perception for-poster.png" style="width: 200px; border-radius: 10px; object-fit: cover;">
+</img></a>
+<div>
+<h3 style="margin-top: 0; text-align: center; font-family: 'Times New Roman'; font-size: 22px;">Cross Modal Robotic Perception with a Large Vision Language Model for Physical Property Inference</h3>
+<p style="font-size: 20px; font-family: 'Times New Roman';">Inferring physical properties can significantly enhance robotic manipulation by enabling robots to handle objects safely and efficiently through adaptive 
+            grasping strategies. However, previous approaches have typically relied solely on either tactile or visual data, limiting their ability to fully capture 
+            object properties. In this work, we propose a novel cross-modal perception framework that integrates visual observations with tactile representations within 
+            a multimodal vision-language model. Our physical reasoning framework incorporates a hierarchical feature alignment mechanism and a refined prompting strategy, 
+            enabling property-specific predictions that correlate strongly with ground-truth physical measurements.We evaluate our approach on a dataset comprising 30 
+            diverse objects and demonstrate that it outperforms existing baselines in accurately predicting physical properties critical for robotic manipulation.</p>
+<a href="https://github.com/hency/robonav" style="font-size: 15px; font-family: 'Times New Roman';" target="_blank">查看 GitHub 页面</a>
+<br/>
+<!-- <a href="" target="_blank" style="font-size: 15px; font-family: 'Times New Roman';">Paper Address</Address></a> -->
+</div>
+</div>
+</div>
+<div class="section" id="Competitions">
+<h2>🏆 Competitions</h2>
+<div class="project" style="display: flex; gap: 20px; align-items: center; margin-bottom: 30px;">
+<a download="" href="resource/17th ROS outdoor competition.png">
+<img src="resource/17th ROS outdoor competition.png" style="width: 200px; border-radius: 10px; object-fit: cover;"/>
+</a>
+<div>
+<h3 style="margin-top: 0; text-align: center; font-size: 22px; font-family: 'Times New Roman';">3rd place in the outdoor ROS competition of the 17th National College Student Smart Car Competition</h3>
+<p style="font-size: 20px; font-family: 'Times New Roman';">The race track is delineated by red and blue cones marking the left and right boundaries. 
+            The competition requires completing the first lap through autonomous mapping, followed by a second lap involving autonomous navigation in the shortest
+            possible time. Our solution utilized a comprehensive technology stack, including high-level chassis controller design, multi-modal data fusion of vision 
+            and radar for obstacle detection, map optimization, and autonomous localization and navigation tracking.</p>
+<a href="https://github.com/Hency-727/racecar_outdoor_ros_competition2022" style="font-size: 15px; font-family: 'Times New Roman';" target="_blank">查看 GitHub 页面</a>
+</div>
+</div>
+<div class="project" style="display: flex; gap: 20px; align-items: center; margin-bottom: 30px;">
+<a download="" href="resource/25th Competition (Intelligent Driving).png">
+<img src="resource/25th Competition (Intelligent Driving).png" style="width: 200px; border-radius: 10px; object-fit: cover;"/>
+</a>
+<div>
+<h3 style="margin-top: 0; text-align: center; font-size: 22px; font-family: 'Times New Roman';">5th place in the 25th China Robotics and Artificial Intelligence Competition</h3>
+<p style="font-size: 20px; font-family: 'Times New Roman';">Developed a robot navigation system capable of reaching specified target points in minimal time within a closed environment, 
+            handling narrow corridors and complex discrete scenarios (e.g., double figure-eight turns formed by cone markers) using Ackermann steering chassis.
+            Employed Gmapping for SLAM-based environment mapping, AMCL for localization, and MoveBase for path planning.Implemented a Pure Pursuit (PP) algorithm 
+            for real-time target point tracking and path following.</p>
+<a href="https://github.com/Hency-727/racecar_intelligent_driving2023" style="font-size: 15px; font-family: 'Times New Roman';" target="_blank">查看 GitHub 页面</a>
+</div>
+</div>
+<div class="project" style="display: flex; gap: 20px; align-items: center; margin-bottom: 30px;">
+<a download="" href="resource/18th Design Competition.png">
+<img src="resource/18th Design Competition.png" style="width: 200px; border-radius: 10px; object-fit: cover;"/>
+</a>
+<div>
+<h3 style="margin-top: 0; text-align: center; font-size: 22px; font-family: 'Times New Roman';">3rd Prize in the National College Students Intelligent Car Competition Intelligent Car Creative Design Competition</h3>
+<p style="font-size: 20px; font-family: 'Times New Roman';">This project was developed by the "顶峰相见，风光无限" team from Shenzhen Technology University as part of the 2023
+            National College Student Smart Car Competition. Built upon the official competition chassis, the team focused on optimizing vehicle structure,
+            sensor layout, and control logic design to create a dual-mode intelligent concept car that balances functionality and aesthetic expression.</p>
+<a href="https://github.com/hency/robonav" style="font-size: 15px; font-family: 'Times New Roman';" target="_blank">查看 GitHub 页面</a>
+</div>
+</div>
+</div>
+<div class="section" id="Internship Report">
+<h2>💼 Internship Report </h2>
+<div class="project" style="display: flex; gap: 20px; align-items: center; margin-bottom: 30px;">
+<img src="resource/The impact of latency and vehicle speed on the motion control of remote urban driving.jpg" style="width: 200px; border-radius: 10px; object-fit: cover;"/>
+<div>
+<h3 style="margin-top: 0;text-align: center; font-family: 'Times New Roman';font-size: 22px;">The impact of latency and vehicle speed on the motion control of remote urban driving</h3>
+<p style="font-size: 20px; font-family: 'Times New Roman';">In this research, we quantitatively analyzes 
+                  the impacts of latency and vehicle speed on motion control 
+                  in remote urban driving through statistical modeling of simulation results and real-world vehicle data. 
+                  It employs Time To Collision (TTC) as a collision risk metric to evaluate and quantify the risk associated 
+                  with different latency scenarios. Experimental results indicate that higher latency significantly increases 
+                  collision risks in specific traffic scenarios, such as protected left turns and intersections. The study 
+                  proposes practical safety countermeasures, including scenario restrictions, speed optimization, and local 
+                  Automated Emergency Braking (AEB), providing critical insights to improve the safety and reliability of remote 
+                  driving systems.</p>
+<!-- <a href="https://github.com/hency/robonav" target="_blank">View on GitHub</a> -->
+</div>
+</div>
+</div>
+<div class="section" id="Graduated Paper">
+<h2>🎓 Graduated Paper </h2>
+<div class="project" style="display: flex; gap: 20px; align-items: center; margin-bottom: 30px;">
+<img src="resource/bachelor_thesis_cover.png" style="width: 200px; border-radius: 10px; object-fit: cover;"/>
+<div>
+<h3 style="margin-top: 0; text-align: center; font-size: 22px; font-family: 'Times New Roman';">Vision–Touch Guided Grasping for Mobile Manipulators</h3>
+<p style="font-size: 20px; font-family: 'Times New Roman';">Problem: Mobile manipulators often struggle with accurate
+                  object grasping and long-range navigation in semantically rich, dynamic environments.</p>
+
+<p style="font-size: 20px; font-family: 'Times New Roman';">Approach: Designed a full-stack robotic system combining Cartographer for high-precision localization and GraspNet-based 6-DoF 
+                  grasp pose prediction under RGB-D Realsense D455i and tactile sensor (Gelsight Mini). Built a ROS-based pipeline integrating YOLOv8 for object detection, SAM for 
+                  segmentation, and MoveIt for motion planning.
+                </p>
+<p style="font-size: 20px; font-family: 'Times New Roman';">Outcome: The localization accuracy was verified through qualitative and quantitative experiments, and crossing-navigation and object grasping in 
+                  different scenarios were realized.</p>
+<!-- <a href="https://github.com/hency/robonav" target="_blank">View on GitHub</a> -->
+</div>
+</div>
+</div>
+<!-- <div class="section" id="Modules" style="max-width: 1200px; margin: auto;"> -->
+<!-- <div class="section" id="Modules">
+      <h2>📦 Modules</h2>
+      <div class="project" style="width: 100%; display: flex; gap: 20px; align-items: center; margin-bottom: 30px;">
+      <img src="force_control.png" alt="RoboNav Preview" style="width: 200px; border-radius: 10px; object-fit: cover;" />
+          <div>
+              <h3 style="margin-top: 0;">RoboNav</h3>
+              <p>Autonomous indoor navigation for service robots. Integrates SLAM, obstacle avoidance, and deep reinforcement learning.</p>
+              <a href="https://github.com/hency/robonav" target="_blank">View on GitHub</a>
+          </div>
+      </div>
+    </div> -->
+<footer>
+      © 2025 Hency. All rights reserved.
+    </footer>
+</div></body>
+</html>
