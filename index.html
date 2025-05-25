@@ -159,7 +159,10 @@
         }
         
     </style>
-
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@waline/client@v3/dist/waline.css"
+    />
     
 
 </head>
@@ -349,7 +352,7 @@
         <p style="font-size: 22px; font-family: 'Times New Roman'; color: #FFD700;">
           INTERESTS:</p>
         <p style="font-size: 18px; font-family: 'Times New Roman';">
-          Mobile Manipulation, SLAM, VLA
+          Mobile Manipulation, SLAM, VLA, Tactile Model
         </p>
       </div>
 
@@ -358,9 +361,16 @@
         <br><br> <!-- 空一行效果 -->
         <br><br> <!-- 空一行效果 -->
         <br><br> <!-- 空一行效果 -->
+
+
+
         <!-- <h2 style="font-size: 20px;">📄 Personal Resume</h2> -->
         <!-- <p>You can download my full academic CV here:</p> -->
-        
+        <!-- ① 在文章开头显示点赞数（可选） -->
+        <!-- <div id="post-like" style="margin:1rem 0;font-size:1.2rem;">
+          <span id="like-count" style="text-align: center;"></span> 👍 
+          <button id="like-btn">like it</button>
+        </div> -->
         <a href="resource/CV_of_Hengxiang_Chen.pdf" download class="btn" style="padding: 10px 20px; background: #007bff; color: white; border-radius: 8px; text-decoration: none; font-weight: bold; font-family: 'Times New Roman'">
           <img id="svgImage" src="logo/download.svg"> Download CV
         </a>
@@ -567,9 +577,24 @@
       </div>
     </div> -->
   
+    <br><br> <!-- 空一行效果 -->
+    <br><br> <!-- 空一行效果 -->
+
+    <div id="waline"></div>
+    <script type="module">
+      import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+
+      init({
+        el: '#waline',
+        serverURL: 'https://walinehency-izvcdzvib-hency-727s-projects.vercel.app/',
+      });
+    </script>
+
+
     <footer>
       &copy; 2025 Hency. All rights reserved.
     </footer>
-  
+
+
 </body>
 </html>

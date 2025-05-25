@@ -1,0 +1,80 @@
+<!--
+ * @Author: HencyCHEN
+ * @Date: 2025-05-25 14:14:48
+ * @LastEditTime: 2025-05-25 14:38:58
+ * @LastEditors: HencyCHEN
+ * @Description: 
+ * @FilePath: /hency-727.github.io/test_comment.html
+ * @Email: hengxiangchen428@gamil.com
+ * 可以输入预定的版权声明、个性签名、空行等
+-->
+<!-- https://walinehency-izvcdzvib-hency-727s-projects.vercel.app -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Demo – Comments · Likes · Visitor Flags</title>
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@waline/client@2/dist/waline.css">
+
+  <style>
+    body   { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+             margin: 0; padding: 0 1rem; line-height: 1.6; }
+    footer { margin-top: 3rem; text-align: center; }
+  </style> -->
+</head>
+
+<body>
+
+  <h1>My Awesome Article</h1>
+  <p>这里放你的正文内容……</p>
+
+  <!-- ① 评论 + 点赞区挂载点 -->
+  <div id="waline"></div>
+
+  <!-- <footer>
+    <a href="https://info.flagcounter.com/XXXX" target="_blank" rel="noopener">
+      <img src="https://s11.flagcounter.com/count2/XXXX/bg_FFFFFF/txt_000000/border_CCCCCC/columns_4/maxflags_16/viewers_0/labels_1/pageviews_1/flags_0/percent_0/"
+           alt="Flag Counter" border="0">
+    </a>
+  </footer> -->
+
+  <!-- Waline 客户端脚本 -->
+  <script src="https://cdn.jsdelivr.net/npm/@waline/client@2/dist/waline.js"></script>
+  <script>
+    Waline.init({
+      el:        '#waline',                 // 挂载点
+      serverURL: 'https://walinehency-izvcdzvib-hency-727s-projects.vercel.app', // ← 改成你的 Waline Server
+      reaction:  ['👍','❤️','🎉','🚀','🤔'], // 点赞 / Reaction 图标
+      pageview:  true,                      // 浏览量统计
+      lang:      'zh-CN',                   // 界面语言（可改 'en'）
+      login:     'enable',                  // 启用第三方登录；如只想匿名可设 'disable'
+    });
+  </script>
+</body>
+</html>
+
+
+<head>
+  <!-- ... -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/@waline/client@v3/dist/waline.css"
+  />
+  <!-- ... -->
+</head>
+<body>
+  <!-- ... -->
+  <div id="waline"></div>
+  <script type="module">
+    import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+
+    init({
+      el: '#waline',
+      serverURL: 'https://your-domain.vercel.app',
+    });
+  </script>
+</body>
