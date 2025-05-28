@@ -17,3 +17,26 @@ this is my personal website, welcome to fork my repo and change something awares
 3. [my personal waline](https://vercel.com/hency-727s-projects/waline_hency/HGMwjMEU1Kea23DCfj6htgeua8W5)
 4. [my personal leadcloud](https://console.leancloud.app/apps/wie9cdwsLqidHiEdaaQr6tTF-MdYXbMMI/settings/keys)
 5. [failed to fetch?](https://github.com/orgs/walinejs/discussions/2654)
+6. Template:
+```bash
+<head>
+  <!-- ... -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/@waline/client@v3/dist/waline.css"
+  />
+  <!-- ... -->
+</head>
+<body>
+  <!-- ... -->
+  <div id="waline"></div>
+  <script type="module">
+    import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+
+    init({
+      el: '#waline',
+      serverURL: 'https://your-domain.vercel.app',
+    });
+  </script>
+</body>
+```

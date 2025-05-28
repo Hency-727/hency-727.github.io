@@ -160,7 +160,10 @@
         
     </style>
 
-    
+      <link
+        rel="stylesheet"
+        href="https://unpkg.com/@waline/client@v3/dist/waline.css"
+      />
 
 </head>
 <body>
@@ -210,7 +213,7 @@
       </div>
 
 
-      <div style="flex: 5.5;">
+      <div style="flex: 7;">
         <a href="#HomePage" style="margin-right: 20px; font-weight: bold; font-family: 'Times New Roman';">HomePage</a>
         <a href="#About Me" style="margin-right: 20px; font-family: 'Times New Roman';">About Me</a>
         <a href="#Selected Projects" style="margin-right: 20px; font-family: 'Times New Roman';">Selected Projects</a>
@@ -219,6 +222,7 @@
         <a href="#Competitions" style="margin-right: 20px; font-family: 'Times New Roman';">Competitions</a>
         <a href="#Internship Report" style="margin-right: 20px; font-family: 'Times New Roman';">Internship Report</a>
         <a href="#Graduated Paper" style="margin-right: 20px; font-family: 'Times New Roman';">Graduated Paper</a>
+        <a href="#waline" style="margin-right: 20px; font-family: 'Times New Roman';">Comments</a>
 
         <!-- <a href="/chinese/" style="color: white;">简体中文</a> -->
       </div>
@@ -566,7 +570,19 @@
           </div>
       </div>
     </div> -->
-  
+    <br>
+    <br>
+    <!-- ... -->
+    <div id="waline"></div>
+    <script type="module">
+      import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+
+      init({
+        el: '#waline',
+        serverURL: 'https://walinehency.vercel.app',
+      });
+    </script>
+
     <footer>
       &copy; 2025 Hency. All rights reserved.
     </footer>
