@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hency </title>
+<script>
+(() => {
+    const storedTheme = localStorage.getItem('theme-preference');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = storedTheme || (prefersDark ? 'dark' : 'light');
+    document.documentElement.dataset.theme = theme;
+})();
+</script>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css">
+</head>
+<body>
+<div id="layout">
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <div class="sidebar-top">
+            <h1>Hengxiang Chen</h1>
+            <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false" aria-label="Toggle color theme">
+                <span class="theme-icon theme-icon-light" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" class="theme-svg">
+                        <path d="M15.8 3.2a8.9 8.9 0 1 0 5 16.4 8.1 8.1 0 1 1-5-16.4Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path>
+                    </svg>
+                </span>
+                <span class="theme-icon theme-icon-dark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" class="theme-svg">
+                        <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"></circle>
+                        <path d="M12 1.8v3.1M12 19.1v3.1M22.2 12h-3.1M4.9 12H1.8M19.2 4.8l-2.2 2.2M7 17l-2.2 2.2M19.2 19.2 17 17M7 7 4.8 4.8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+                    </svg>
+                </span>
+            </button>
+        </div>
+        <p class="tagline"> </p>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#updates">Updates</a></li>
+            <!-- <li><a href="#research">Research</a></li> -->
+            <li><a href="#publications">Publications</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#competitions">Competitions</a></li>
+            <li><a href="#technical_tutorials">Tutorials</a></li>
+            <li><a href="#comments">Comments</a></li>
+            <!-- <li><a href="#contact">Contact</a></li> -->
+            <li><a href="#hobbies">Hobbies</a></li>
+            <!-- <li><a href="https://github.com/hengxiangchen">GitHub</a></li> -->
+        </ul>
+    </div>
+
+    <!-- Main content -->
+    <div id="content">
+        <section id="about">
+            <div class="about-header">
+                <div class="about-copy">
+                    <h2>About</h2>
+                    <p>
+                        Hi, I'm <b>Hengxiang Chen</b>. <span class="text-red">Contact me with any excuse: <a href="mailto:hengxiangchen428@gmail.com">Email</a></span>
+                        <br>
+                        I am a research assistant in robotics. My work centers on robot learning, especially in mobile manipulation.
+                        <br>
+                        I am currently a Research Assistant at the <a href="https://tusz-agdr.github.io/">Arbeit Gruppe
+                        Dexterous Robotics Lab</a> of Shenzhen Technology University.
+                        I am going to become a M.Phil. in Robotics at HKUST(GZ), and I previously studied
+                        vehicle engineering at <a href="https://www.sztu.edu.cn/">SZTU</a>. I was also an exchange student at
+                        <a href="https://www.hs-coburg.de/">Hochschule Coburg</a>  in Germany.
+                    </p>
+                    <p class="personal-motto">
+                        "All formulas equalize under the Sun!"
+                    </p>
+                </div>
+                <div class="about-avatar">
+                    <img
+                        src="images/profile.jpeg"
+                        alt="Portrait placeholder for Hengxiang Chen"
+                        class="profile-photo"
+                    >
+                    <img
+                        src="images/signature.jpg"
+                        alt="Signature of Hengxiang Chen"
+                        class="profile-signature"
+                    >
+                    <div class="profile-links">
+                        <a href="Resume - Hengxiang Chen.pdf" target="_blank" rel="noopener noreferrer">CV</a>
+                        <span>|</span>
+                        <!-- <a href="mailto:hengxiangchen428@gmail.com">Email</a>
+                        <span>|</span> -->
+                        <button type="button" class="profile-link-button" id="wechat-trigger">WeChat</button>
+                        <span>|</span>
+                        <a href="https://github.com/hengxiangchen" target="_blank" rel="noopener noreferrer">Github</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="research">
+            <h2>Research Interests</h2>
+            <ul class="compact-list">
+                <li>Mobile Manipulation</li>
+                <li>Robot Learning</li>
+            </ul>
+        </section>
+
+        <section id="updates">
+            <h2>Recent Updates</h2>
+            <ul class="compact-list">
+                <li>Currently I am preparing for my ielts exam on May 8th, check my notes <a href="">here.</a></li>
+                <li>08.2025: Offer accepted for M.Phil. at HKUSTGZ. <b class="text-red">Thanks, HKUSTGZ!</b></li>
+                <li>06.2025: Graduated from SZTU</li>
+                <li>08.2024: Offer accepted X-Talent in SZTU as an research assistant. <b class="text-red">Thanks, SZTU!</b></li>
+                <li>08.2024: Finished internship at VALEO in Kronach, Germany. <b class="text-red">Thanks, Valeo!</b> <a href="https://www.linkedin.com/posts/valeo-deutschland_student-exchange-between-germany-and-china-activity-7188491811424804865-kSff/">[Report].</a></li>
+                <li>03.2024: Finished research work in SZTU Racing Car Studio about intelligent driving</li>
+            </ul>
+        </section>
+
+        <section id="publications">
+            <h2>Selected Publications</h2>
+
+            <div class="pub-group">
+                <h3>Robot Learning</h3>
+
+                <article class="publication publication--image">
+                    <div class="pub-media pub-media--image">
+                        <video
+                            class="pub-video pub-video--fit"
+                            controls
+                            preload="metadata"
+                            poster="">
+                            <source
+                                src="videos/safecs.mp4"
+                                type="video/mp4"
+                            >
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="pub-copy">
+                        <h4>
+                            A Generalizable Approach for Safety-Aware Robotic Behavior Planner
+                            with Constraint Space
+                        </h4>
+                        <p class="pub-meta">
+                            Xianxu Wu, Shang-Ching Liu, <b>Hengxiang Chen</b>, Qiang Li, and Jianwei Zhang
+                        </p>
+                        <p class="pub-meta">
+                            <b>CASE2026 In review</b>
+                        </p>
+                        <p class="pub-links">
+                            <a href="https://arxiv.org/abs/2506.19303">paper</a>
+                            <a href="https://hengxiangchen.github.io/">project</a>
+                        </p>
+                    </div>
+                </article>
+
+                <article class="publication publication--image">
+                    <div class="pub-media pub-media--image">
+                        <video
+                            class="pub-video pub-video--fit"
+                            controls
+                            preload="metadata"
+                            poster="">
+                            <source
+                                src="videos/octopi-x.mp4"
+                                type="video/mp4"
+                            >
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="pub-copy">
+                        <h4>
+                            Octopi-X: Robotic Perception with a Large
+                            Tactile-Vision-Language Model for Physical Property
+                            Inference
+                        </h4>
+                        <p class="pub-meta">
+                            Zexiang Guo*, <b>Hengxiang Chen*</b>, Xinheng Mai*,
+                            Qiusang Qiu, Gan Ma, Zhanat Kappassov, Qiang Li,
+                            Nutan Chen
+                        </p>
+                        <p class="pub-meta">
+                            <span class="text-red">Best Paper Finalists Award</span> in IROS2025 Workshop Tactile Sensing
+                        </p>
+                        <p class="pub-links">
+                            <a href="https://openreview.net/forum?id=fx00MuY7RW">paper</a>
+                            <a href="https://tusz-agdr.github.io/octopi-X.github.io/">project</a>
+                            <a href="https://arxiv.org/abs/2506.19303">arxiv</a>
+                        </p>
+                        <p class="pub-summary">
+                            Inferring physical properties can significantly
+                            enhance robotic manipulation by enabling robots to
+                            handle objects safely and efficiently through
+                            adaptive grasping strategies. We integrate visual
+                            observations with tactile representations within a
+                            multimodal vision-language model and show strong
+                            zero-shot generalization.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="publication publication--image">
+                    <div class="pub-media pub-media--image">
+                        <img
+                            src="images/Cross-Modal_Robotic_Perception_for-poster.png"
+                            alt="Illustration placeholder for interactive planning paper"
+                            class="pub-image pub-image--fit"
+                        >
+                    </div>
+                    <div class="pub-copy">
+                        <h4>
+                            Cross Modal Robotic Perception with a Large Vision
+                            Language Model for Physical Property Inference
+                        </h4>
+                        <p class="pub-meta">
+                            Zexiang Guo*, <b>Hengxiang Chen*</b>, Qiusang Qiu,
+                            et al.
+                        </p>
+                        <p class="pub-meta">
+                            <b>Clawar2025</b>
+                        </p>
+                        <p class="pub-links">
+                            <a href="https://arxiv.org/abs/2506.19303">paper</a>
+                            <a href="https://hengxiangchen.github.io/">project</a>
+                        </p>
+                        <p class="pub-summary">
+                            Inferring physical properties can significantly
+                            enhance robotic manipulation by enabling robots to
+                            handle objects safely and efficiently through
+                            adaptive grasping strategies. Our framework fuses
+                            visual observations and tactile representations,
+                            outperforming baselines on diverse objects.
+                        </p>
+                    </div>
+                </article>
+            </div>
+
+            <div class="pub-group">
+                <h3>Autonomous Systems</h3>
+
+                <article class="publication publication--image">
+                    <div class="pub-media pub-media--image">
+                        <img
+                            src="images/pp_auv_.png"
+                            alt="Illustration placeholder for interactive planning paper"
+                            class="pub-image pub-image--fit"
+                        >
+                    </div>
+                    <div class="pub-copy">
+                        <h4>
+                            Path Planning Algorithm Comparison Analysis for
+                            Wireless AUVs Energy Sharing System
+                        </h4>
+                        <p class="pub-meta">
+                            Zhengji Feng, <b>Hengxiang Chen</b>, Liqun Chen, Xiaolin Mou
+                        </p>
+                        <p class="pub-meta">
+                            <b>IEEE ITeN 2023</b>
+                        </p>
+                        <p class="pub-links">
+                            <a href="https://ieeexplore.ieee.org/document/10311674">paper</a>
+                            <a href="https://github.com/hengxiangchen/Algorithm_Comparison_RRTstar_and_PSO">code</a>
+                        </p>
+                        <p class="pub-summary">
+                            This research proposes a wireless AUV energy sharing
+                            system for underwater recharging and compares RRT*
+                            and PSO for path planning under static and dynamic
+                            obstacles, with analysis of path length, energy
+                            consumption, and computational complexity.
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Selected Projects</h2>
+            <div class="pub-group">
+
+                <article class="publication publication--image">
+                    <div class="pub-media pub-media--image">
+                        <video
+                            class="pub-video pub-video--fit"
+                            controls
+                            preload="metadata"
+                            poster="">
+                            <source
+                                src="videos/moblie manipulation.mp4"
+                                type="video/mp4"
+                            >
+                        </video>
+
+                    </div>
+                    <div class="pub-copy">
+                        <h4>
+                            本科毕业论文：移动操作机器人定位算法和基于视触融合的抓取研究
+                            <br>
+                            Graduated Thesis: Vision-Touch Guided Grasping for Mobile Manipulators control of remote urban driving
+                        </h4>
+                        <p class="pub-meta">
+                            <b>Hengxiang Chen</b>, Qiang Li
+                        </p>
+                        <p class="pub-links">
+                            <!-- <a href="https://ieeexplore.ieee.org/document/10311674">paper</a> -->
+                            <a href="">code</a>
+                        </p>
+                        <p class="pub-summary">
+                            Problem: Mobile manipulators often struggle with accurate object
+                            grasping and long-horizon navigation in dynamic environments. 
+                            <br>
+                            In this work, I designed a full-stack robotic software system based ROS
+                            combining <a href="https://wiki.ros.org/cartographer">'Cartographer'</a> for high-precision localization, <a href="https://github.com/graspnet/graspnetAPI">'GraspNet'</a> and 'YOLOv8'
+                            for object detection and 6-DoF grasping pose generalization, and a close-loop
+                            control algorithm using tactile optical sensors(Gelsight Mini), trying to let
+                            the mobile manipulator deliver books to humans even in a cross-floor scenario.
+                            <!-- <br>
+                            Some available technical stacks: YOLOv8/SAM/MoveIt -->
+                            <!-- <br>
+                            Outcome: The localization accuracy was verified through qualitative
+                            and quantitative experiments, and crossing-navigation and object grasping
+                            in different scenarios were realized. -->
+                        </p>
+                    </div>
+                </article>
+                <article class="publication publication--image">
+
+                    <div class="pub-media pub-media--image">
+                        <img
+                            src="images/The_impact_of_latency_and_vehicle_speed_on_the_motion_control_of_remote_urban_driving.jpg"
+                            alt="Illustration placeholder for interactive planning paper"
+                            class="pub-image pub-image--fit"
+                        >
+                    </div>
+
+                    <div class="pub-copy">
+                        <h4>
+                            Internship Technical Report: The impact of latency and vehicle speed on the motion control of remote urban driving
+                        </h4>
+                        <p class="pub-meta">
+                            <b>Hengxiang Chen</b>, Yongwei Yang
+                        </p>
+                        <p class="pub-summary">
+                            In this research, we quantitatively analyzes the impacts
+                            of latency and vehicle speed on motion control in remote
+                            urban driving through statistical modeling of simulation
+                            results and real-world vehicle data. It employs Time To
+                            Collision (TTC) as a collision risk metric to evaluate
+                            and quantify the risk associated with different latency
+                            scenarios. Experimental results indicate that higher latency
+                            significantly increases collision risks in specific traffic
+                            scenarios, such as protected left turns and intersections.
+                            The study proposes practical safety countermeasures, including
+                            scenario restrictions, speed optimization, and local Automated
+                            Emergency Braking (AEB), providing critical insights to
+                            improve the safety and reliability of remote driving systems.
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="competitions">
+            <h2>Competitions</h2>
+
+            <div class="pub-group">
+                <article class="publication publication--image">
+                    <div class="pub-media pub-media--image">
+                        <img
+                            src="images/competition-2023.png"
+                            alt="Award certificate for Chinese Robotics and Artificial Intelligence Competition"
+                            class="pub-image pub-image--fit"
+                        >
+                    </div>
+                    <div class="pub-copy">
+                        <h4>Chinese Robotics and Artificial Intelligence Competition (Intelligent Driving)</h4>
+                        <p class="pub-meta">
+                            <b>Team Leader</b>
+                        </p>
+                        <p class="pub-meta">
+                            June 2023 - Hainan, China
+                        </p>
+                        <p class="competition-award">
+                            <b>5th Place (National First Prize)</b>
+                        </p>
+                        <p class="pub-summary">
+                            In this competition, we aimed to reach the goal area as quickly as possible on a 
+                            predefined map consisting of straight roads, curved racing sections, and a figure-eight roundabout.
+                            <br>
+                            I was mainly responsible for the development of system pipeline based on ROS,
+                            I also participated in fine-tuning parameters of <a href="https://wiki.ros.org/move_base">'Movebase'</a>, which included many 
+                            autonomous algorithms for mobile base planning and control.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="publication publication--image">
+                    <div class="pub-media pub-media--image">
+                        <img
+                            src="images/competition-2022.png"
+                            alt="Award certificate for Chinese Outdoor ROS Autonomous Racing Competition"
+                            class="pub-image pub-image--fit"
+                        >
+                    </div>
+                    <div class="pub-copy">
+                        <h4>Chinese Outdoor ROS Autonomous Racing Competition</h4>
+                        <p class="pub-meta">
+                            <b>Team Leader</b>
+                        </p>
+                        <p class="pub-meta">
+                            December 2022 - Shenzhen, China
+                        </p>
+                        <p class="competition-award">
+                            <b>3rd Place (National First Prize)</b>
+                        </p>
+                        <p class="pub-summary">
+                            In this competition, our goal was develop the racing car software system for finishing
+                            two cycles of the predefined track consisting of only cone buckets as fast as possible.
+                            <br>
+                            In this work, I developed the method of multi-sensors fusion as following.
+                        </p>
+                        <img
+                            src="images/sensors-fusion.png"
+                            alt="Award certificate for Chinese Robotics and Artificial Intelligence Competition"
+                            class="pub-image pub-image--fit"
+                        >
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="technical_tutorials">
+            <h2>Tutorials</h2>
+            <ul class="compact-list">
+                <li>04.2026: I was invited to give a talk about Collaborative Control of Mobile Manipulators<a href="协同控制-20260423-v1.pdf">[Slide]</a>.</li>
+                <li>10.2025: I was invited to give a talk in IROS2025 Tactile Sensing Workshop<a href="workshop_ppt-hengxiang chen.pdf">[Slide]</a>.</li>
+            </ul>
+        </section>
+
+        <!-- <section id="contact">
+            <h2>Contact</h2>
+            <p>Email: hengxiangchen428@gmail.com</p>
+        </section> -->
+
+        <section id="hobbies">
+            <h2>Hobbies</h2>
+            <p>I am a solo traveller, I have been to several countries. I love Iceland best.</p>
+            <p>In my spare time, I enjoy electronic music and jazz hip-pop. <a href="https://zh.wikipedia.org/wiki/Luv(sic)_Hexalogy">Hexalogy</a> from nujabes and shing02 is one of my favorite albums.</p> 
+        </section>
+
+        <section id="comments">
+            <h2>Comments</h2>
+            <!-- <p class="comments-note">
+                Waline is wired in. To make it live, set your deployed Waline
+                <code>serverURL</code> in the script at the bottom of this file.
+            </p> -->
+            <div id="waline" class="comments-host"></div>
+        </section>
+
+        <footer class="site-footer">
+            <p>&copy; 2026 Hency. All rights reserved.</p>
+        </footer>
+
+    </div>
+</div>
+<div class="wechat-modal" id="wechat-modal" hidden>
+    <div class="wechat-modal-backdrop" id="wechat-backdrop"></div>
+    <div class="wechat-modal-panel" role="dialog" aria-modal="true" aria-labelledby="wechat-title">
+        <button type="button" class="wechat-close" id="wechat-close" aria-label="Close WeChat QR code">×</button>
+        <h3 id="wechat-title">WeChat</h3>
+        <img src="images/wechat_qrcode.png" alt="WeChat QR code" class="wechat-qr">
+        <p>Scan the QR code to add me on WeChat.</p>
+    </div>
+</div>
+<script type="module">
+import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+
+const WALINE_SERVER_URL = 'https://walinehency.vercel.app';
+const wechatModal = document.getElementById('wechat-modal');
+const wechatTrigger = document.getElementById('wechat-trigger');
+const wechatClose = document.getElementById('wechat-close');
+const wechatBackdrop = document.getElementById('wechat-backdrop');
+const themeToggle = document.getElementById('theme-toggle');
+
+function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem('theme-preference', theme);
+    if (themeToggle) {
+        const isDark = theme === 'dark';
+        themeToggle.setAttribute('aria-pressed', String(isDark));
+        themeToggle.setAttribute(
+            'aria-label',
+            isDark ? 'Switch to light mode' : 'Switch to dark mode'
+        );
+        themeToggle.title = isDark ? 'Light mode' : 'Dark mode';
+    }
+}
+
+applyTheme(document.documentElement.dataset.theme || 'light');
+
+themeToggle?.addEventListener('click', () => {
+    const nextTheme =
+        document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    applyTheme(nextTheme);
+});
+
+function openWechatModal() {
+    wechatModal.hidden = false;
+    document.body.classList.add('modal-open');
+}
+
+function closeWechatModal() {
+    wechatModal.hidden = true;
+    document.body.classList.remove('modal-open');
+}
+
+wechatTrigger?.addEventListener('click', openWechatModal);
+wechatClose?.addEventListener('click', closeWechatModal);
+wechatBackdrop?.addEventListener('click', closeWechatModal);
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !wechatModal.hidden) {
+        closeWechatModal();
+    }
+});
+
+if (WALINE_SERVER_URL) {
+    init({
+        el: '#waline',
+        serverURL: WALINE_SERVER_URL,
+        dark: 'html[data-theme="dark"]',
+    });
+} else {
+    const walineRoot = document.getElementById('waline');
+    walineRoot.innerHTML = `
+        <div class="comments-placeholder">
+            <p><b>Waline is not configured yet.</b></p>
+            <p>Set <code>WALINE_SERVER_URL</code> in <code>preview.html</code> to enable comments.</p>
+        </div>
+    `;
+}
+</script>
+</body>
+</html>

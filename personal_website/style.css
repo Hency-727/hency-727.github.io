@@ -1,0 +1,631 @@
+/**
+ * Copyright 2026 Hency
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+body {
+    margin: 0;
+    font-family: "Courier New", monospace;
+    background: #faf8f2;
+    color: #222;
+    transition: background-color 180ms ease, color 180ms ease;
+}
+
+#layout {
+    display: flex;
+}
+
+#sidebar {
+    width: 240px;
+    height: 100vh;
+    padding: 24px;
+    position: fixed;
+    box-sizing: border-box;
+    border-right: 1px solid #ddd4c3;
+    background: #f3efe3;
+}
+
+#sidebar h1 {
+    margin-bottom: 5px;
+    font-size: 22px;
+}
+
+.sidebar-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.sidebar-top h1 {
+    margin: 0;
+    line-height: 1;
+}
+
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #2b241c;
+    cursor: pointer;
+    transition: color 180ms ease, transform 180ms ease;
+}
+
+.theme-toggle:hover {
+    transform: translateY(-1px);
+}
+
+.theme-icon {
+    display: none;
+}
+
+.theme-svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+}
+
+html[data-theme="light"] .theme-icon-light,
+html[data-theme="dark"] .theme-icon-dark {
+    display: block;
+}
+
+.tagline {
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: #666;
+}
+
+#sidebar ul {
+    padding: 0;
+    list-style: none;
+}
+
+#sidebar li {
+    margin-bottom: 10px;
+}
+
+#sidebar a {
+    color: #222;
+    text-decoration: none;
+}
+
+#sidebar a:hover {
+    color: #0077cc;
+}
+
+#content {
+    max-width: 900px;
+    margin-left: 260px;
+    padding: 40px;
+}
+
+.about-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 220px;
+    gap: 24px;
+    align-items: start;
+}
+
+.about-copy {
+    min-width: 0;
+}
+
+.about-avatar {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    margin-top: 32px;
+}
+
+.profile-photo {
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd4c3;
+    background: #ece6d7;
+}
+
+.profile-signature {
+    display: block;
+    width: 82%;
+    margin: 12px auto 0;
+    background: transparent;
+}
+
+.profile-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 8px;
+    width: 100%;
+    margin-top: 14px;
+    font-size: 17px;
+    line-height: 1.45;
+    text-align: center;
+}
+
+.profile-links a {
+    color: #1a5fd0;
+    text-decoration: none;
+}
+
+.profile-link-button {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #1a5fd0;
+    font: inherit;
+    cursor: pointer;
+}
+
+.profile-link-button:hover {
+    text-decoration: underline;
+}
+
+.profile-links a:hover {
+    text-decoration: underline;
+}
+
+.profile-links span {
+    color: #222;
+}
+
+.avatar-note {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #666;
+}
+
+section {
+    margin-bottom: 48px;
+}
+
+h2 {
+    margin-top: 40px;
+    margin-bottom: 14px;
+    font-size: 28px;
+}
+
+p {
+    line-height: 1.6;
+}
+
+.personal-motto {
+    margin-top: 18px;
+    padding-left: 14px;
+    border-left: 3px solid #9b7b45;
+    color: #5a4d3c;
+    font-style: italic;
+}
+
+.text-red {
+    color: #c0392b;
+}
+
+.compact-list {
+    padding-left: 20px;
+    line-height: 1.8;
+}
+
+.section-intro {
+    margin-bottom: 28px;
+    color: #555;
+}
+
+.pub-group {
+    margin-bottom: 32px;
+}
+
+.pub-group h3 {
+    margin-bottom: 16px;
+    font-size: 20px;
+    color: #2f4f4f;
+}
+
+.publication {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+    margin-bottom: 16px;
+    padding: 18px 20px;
+    border: 1px solid #ddd4c3;
+    border-left: 4px solid #2f4f4f;
+    background: #fffdf8;
+}
+
+.publication--image {
+    grid-template-columns: minmax(320px, 390px) minmax(0, 1fr);
+}
+
+.pub-media {
+    min-width: 0;
+}
+
+.pub-media--image {
+    padding: 8px;
+    border: 1px solid #ddd4c3;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.pub-copy {
+    min-width: 0;
+}
+
+.publication h4 {
+    margin: 0 0 10px;
+    font-size: 19px;
+    line-height: 1.4;
+}
+
+.pub-meta,
+.pub-links,
+.pub-summary {
+    margin: 8px 0;
+}
+
+.pub-meta {
+    margin: 4px 0 6px;
+    font-size: 13px;
+    line-height: 1.35;
+    color: #555;
+}
+
+.venue {
+    display: inline-block;
+    margin-left: 10px;
+    color: #8a5a00;
+}
+
+.pub-links a {
+    margin-right: 16px;
+}
+
+.pub-summary {
+    color: #333;
+}
+
+.pub-image,
+.pub-video {
+    display: block;
+    width: 100%;
+    background: #ece6d7;
+}
+
+.pub-video {
+    margin-top: 0;
+    height: auto;
+    object-fit: contain;
+    background: #fff;
+}
+
+.pub-video--fit {
+    object-fit: contain;
+}
+
+.pub-video--crop {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: center 60%;
+    background: #fff;
+}
+
+.pub-image {
+    aspect-ratio: 7 / 4;
+    object-fit: cover;
+}
+
+.pub-image--fit {
+    aspect-ratio: auto;
+    object-fit: contain;
+    background: #fff;
+    border: 0;
+}
+
+.pub-note {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #666;
+}
+
+.competition-list {
+    display: grid;
+    gap: 16px;
+}
+
+.competition-item {
+    padding: 18px 20px;
+    border: 1px solid #ddd4c3;
+    border-left: 4px solid #9b7b45;
+    background: #fffdf8;
+}
+
+.competition-item h4 {
+    margin: 0 0 10px;
+    font-size: 19px;
+    line-height: 1.4;
+}
+
+.competition-award {
+    margin: 6px 0 10px;
+    color: #2f4f4f;
+}
+
+.comments-note {
+    margin-bottom: 14px;
+    color: #666;
+}
+
+.comments-host {
+    min-height: 140px;
+}
+
+.comments-placeholder {
+    padding: 18px 20px;
+    border: 1px solid #ddd4c3;
+    border-left: 4px solid #9b7b45;
+    background: #fffdf8;
+}
+
+.comments-placeholder p {
+    margin: 8px 0;
+}
+
+.comments-host .wl-count,
+.comments-host .wl-sort,
+.comments-host .wl-empty {
+    display: none;
+}
+
+.comments-host .wl-content {
+    margin-top: 0;
+}
+
+.comments-host .wl-comment {
+    margin-top: 0;
+}
+
+.site-footer {
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd4c3;
+    color: #666;
+    font-size: 14px;
+}
+
+.site-footer p {
+    margin: 0;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+.wechat-modal[hidden] {
+    display: none;
+}
+
+.wechat-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+}
+
+.wechat-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(34, 34, 34, 0.55);
+}
+
+.wechat-modal-panel {
+    position: relative;
+    z-index: 1;
+    width: min(360px, calc(100vw - 32px));
+    margin: 10vh auto 0;
+    padding: 20px 20px 18px;
+    border: 1px solid #ddd4c3;
+    background: #fffdf8;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.wechat-modal-panel h3 {
+    margin: 0 0 12px;
+    font-size: 22px;
+}
+
+.wechat-close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    border: 0;
+    background: transparent;
+    color: #666;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.wechat-qr {
+    display: block;
+    width: min(240px, 100%);
+    margin: 0 auto 12px;
+    border: 1px solid #ddd4c3;
+    background: #fff;
+}
+
+html {
+    color-scheme: light;
+}
+
+html[data-theme="dark"] {
+    color-scheme: dark;
+}
+
+html[data-theme="dark"] body {
+    background:
+        radial-gradient(circle at top right, rgba(73, 99, 165, 0.18), transparent 28%),
+        radial-gradient(circle at top left, rgba(143, 95, 40, 0.14), transparent 25%),
+        #111419;
+    color: #e7dfd2;
+}
+
+html[data-theme="dark"] #sidebar {
+    border-right-color: #2c3642;
+    background:
+        linear-gradient(180deg, rgba(30, 38, 49, 0.98), rgba(18, 23, 30, 0.98));
+}
+
+html[data-theme="dark"] #sidebar a,
+html[data-theme="dark"] #sidebar h1,
+html[data-theme="dark"] #content,
+html[data-theme="dark"] .publication h4,
+html[data-theme="dark"] .competition-item h4,
+html[data-theme="dark"] .wechat-modal-panel h3 {
+    color: #f3ecdf;
+}
+
+html[data-theme="dark"] p,
+html[data-theme="dark"] li,
+html[data-theme="dark"] .pub-summary,
+html[data-theme="dark"] .pub-copy,
+html[data-theme="dark"] .competition-award,
+html[data-theme="dark"] .comments-placeholder p,
+html[data-theme="dark"] .wechat-modal-panel p {
+    color: #d7deea;
+}
+
+html[data-theme="dark"] #sidebar a:hover,
+html[data-theme="dark"] .profile-links a,
+html[data-theme="dark"] .profile-link-button,
+html[data-theme="dark"] .pub-links a,
+html[data-theme="dark"] .text-red a {
+    color: #7ac7ff;
+}
+
+html[data-theme="dark"] .tagline,
+html[data-theme="dark"] .pub-meta,
+html[data-theme="dark"] .comments-note,
+html[data-theme="dark"] .site-footer,
+html[data-theme="dark"] .wechat-close,
+html[data-theme="dark"] .profile-links span {
+    color: #aeb8c4;
+}
+
+html[data-theme="dark"] .theme-toggle {
+    color: #e7dfd2;
+}
+
+html[data-theme="dark"] .theme-toggle:hover {
+    color: #ffffff;
+}
+
+html[data-theme="dark"] .personal-motto {
+    border-left-color: #7ac7ff;
+    color: #c9d7e6;
+}
+
+html[data-theme="dark"] .text-red {
+    color: #ff8f87;
+}
+
+html[data-theme="dark"] .publication,
+html[data-theme="dark"] .competition-item,
+html[data-theme="dark"] .comments-placeholder,
+html[data-theme="dark"] .wechat-modal-panel {
+    border-color: #2c3642;
+    background: rgba(20, 25, 32, 0.94);
+}
+
+html[data-theme="dark"] .publication,
+html[data-theme="dark"] .comments-placeholder {
+    border-left-color: #7ac7ff;
+}
+
+html[data-theme="dark"] .competition-item {
+    border-left-color: #d5a96a;
+}
+
+html[data-theme="dark"] .pub-media--image,
+html[data-theme="dark"] .profile-photo,
+html[data-theme="dark"] .wechat-qr {
+    border-color: #2c3642;
+    background: #171d25;
+}
+
+html[data-theme="dark"] .pub-image,
+html[data-theme="dark"] .pub-video {
+    background: #171d25;
+}
+
+html[data-theme="dark"] .wechat-modal-backdrop {
+    background: rgba(4, 6, 10, 0.72);
+}
+
+html[data-theme="dark"] .site-footer {
+    border-top-color: #2c3642;
+}
+
+html[data-theme="dark"] .comments-host {
+    --waline-theme-color: #7ac7ff;
+    --waline-active-color: #a5dcff;
+    --waline-color: #d9e1eb;
+    --waline-bgcolor: #141920;
+    --waline-bgcolor-light: #1a212b;
+    --waline-bgcolor-hover: #202834;
+    --waline-border-color: #2c3642;
+    --waline-disable-bgcolor: #161b22;
+    --waline-disable-color: #728196;
+    --waline-info-color: #8e9aab;
+    --waline-code-color: #ff8f87;
+    --waline-bq-color: #9ba7b8;
+}
+
+@media (max-width: 860px) {
+    #layout {
+        display: block;
+    }
+
+    #sidebar {
+        width: auto;
+        height: auto;
+        position: static;
+        border-right: 0;
+        border-bottom: 1px solid #ddd4c3;
+    }
+
+    #content {
+        margin-left: 0;
+        padding: 24px;
+    }
+
+    .about-header {
+        grid-template-columns: 1fr;
+    }
+
+    .about-avatar {
+        margin-top: 0;
+    }
+
+    .publication {
+        grid-template-columns: 1fr;
+    }
+}

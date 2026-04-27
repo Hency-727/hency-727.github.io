@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 720" role="img" aria-labelledby="title desc">
+  <title id="title">Profile placeholder</title>
+  <desc id="desc">Placeholder portrait for a profile photo.</desc>
+  <rect width="600" height="720" fill="#f4eedf"/>
+  <rect x="40" y="40" width="520" height="640" rx="28" fill="#fffaf0" stroke="#d8ccb2" stroke-width="4"/>
+  <circle cx="300" cy="250" r="110" fill="#d2c2a4"/>
+  <path d="M160 530c30-90 100-140 140-140s110 50 140 140" fill="#c4b08a"/>
+  <rect x="140" y="598" width="320" height="24" rx="12" fill="#2f4f4f"/>
+  <text x="300" y="654" text-anchor="middle" font-family="Courier New, monospace" font-size="24" fill="#5f5646">
+    Replace with your avatar
+  </text>
+</svg>
