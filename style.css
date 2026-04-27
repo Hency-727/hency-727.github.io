@@ -419,6 +419,99 @@ body.modal-open {
     overflow: hidden;
 }
 
+.rover-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    pointer-events: none;
+}
+
+.rover-layer[data-state="idle"] .rover-bot,
+.rover-layer[data-state="idle"] .rover-spark {
+    opacity: 0;
+}
+
+.rover-bot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #202937, #111722);
+    color: #f9f3e8;
+    cursor: pointer;
+    pointer-events: auto;
+    overflow: hidden;
+    box-shadow: 0 10px 22px rgba(17, 23, 34, 0.3);
+    transition: transform 180ms ease, box-shadow 160ms ease, opacity 160ms ease;
+}
+
+.rover-bot:hover {
+    box-shadow: 0 14px 24px rgba(17, 23, 34, 0.38);
+}
+
+.rover-bot.is-hit {
+    animation: rover-hit 220ms ease;
+}
+
+.rover-svg {
+    width: 26px;
+    height: 26px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 3;
+}
+
+.rover-spark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #2f4f4f;
+    opacity: 0;
+    transform: translateY(8px) scale(0.9);
+    pointer-events: none;
+}
+
+.rover-spark.is-visible {
+    animation: rover-spark 420ms ease;
+}
+
+@keyframes rover-hit {
+    0% {
+        box-shadow: 0 10px 22px rgba(17, 23, 34, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 0 8px rgba(122, 170, 214, 0.16);
+    }
+    100% {
+        box-shadow: 0 10px 22px rgba(17, 23, 34, 0.3);
+    }
+}
+
+@keyframes rover-spark {
+    0% {
+        opacity: 0;
+        transform: translateY(8px) scale(0.9);
+    }
+    30% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-12px) scale(1.05);
+    }
+}
+
 .wechat-modal[hidden] {
     display: none;
 }
@@ -545,6 +638,16 @@ html[data-theme="dark"] .personal-motto {
 
 html[data-theme="dark"] .text-red {
     color: #ff8f87;
+}
+
+html[data-theme="dark"] .rover-bot {
+    background: linear-gradient(180deg, #262f3f, #131925);
+    color: #f3ecdf;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
+}
+
+html[data-theme="dark"] .rover-spark {
+    color: #8bd0ff;
 }
 
 html[data-theme="dark"] .publication,
