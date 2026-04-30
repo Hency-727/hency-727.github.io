@@ -451,6 +451,16 @@ body.modal-open {
     transition: transform 180ms ease, box-shadow 160ms ease, opacity 160ms ease;
 }
 
+.rover-bot--2 {
+    width: 40px;
+    height: 40px;
+}
+
+.rover-bot--3 {
+    width: 36px;
+    height: 36px;
+}
+
 .rover-bot:hover {
     box-shadow: 0 14px 24px rgba(17, 23, 34, 0.38);
 }

@@ -413,8 +413,9 @@
                             <b>3rd Place (National First Prize)</b>
                         </p>
                         <p class="pub-summary">
-                            In this competition, our goal was develop the racing car software system for finishing
-                            two cycles of the predefined track consisting of only cone buckets as fast as possible.
+                        The objective of this competition was to design and implement the software system 
+                        for an autonomous race car capable of completing two laps of a cone-defined track
+                        in the shortest possible time.
                             <br>
                             In this work, I developed the method of multi-sensors fusion as following.
                         </p>
@@ -464,13 +465,35 @@
     </div>
 </div>
 <div class="rover-layer" id="rover-layer" data-state="running" aria-hidden="true">
-    <button type="button" class="rover-bot" id="rover-bot" aria-label="Catch the ninja">
+    <button type="button" class="rover-bot rover-bot--1" data-rover-index="0" aria-label="Catch the ninja">
         <svg viewBox="0 0 64 64" class="rover-svg" aria-hidden="true">
             <path d="M32 8c10.7 0 19.5 8.2 20.5 18.7-4.9-2.9-10.6-4.5-16.7-4.5H28.2c-6.1 0-11.8 1.6-16.7 4.5C12.5 16.2 21.3 8 32 8Z" fill="currentColor"></path>
             <path d="M15.5 28.5c4.1-3.1 9.2-4.8 14.7-4.8h3.6c5.5 0 10.6 1.7 14.7 4.8l-3.4 18.4c-0.4 2.4-2.5 4.1-4.9 4.1H23.8c-2.4 0-4.5-1.7-4.9-4.1Z" fill="currentColor"></path>
             <path d="M20.5 30.2c2.6-2 5.9-3.1 9.4-3.1h4.2c3.5 0 6.8 1.1 9.4 3.1l-1.8 7.2H22.3Z" fill="rgba(15, 21, 29, 0.72)"></path>
             <path d="M24.5 35.2c2.1-1.5 4.7-2.3 7.5-2.3s5.4 0.8 7.5 2.3" fill="none" stroke="#f7f0df" stroke-linecap="round" stroke-width="2.4"></path>
             <path d="M19 18.5l9.2 4.6M45 18.5l-9.2 4.6" fill="none" stroke="#ff8f87" stroke-linecap="round" stroke-width="3"></path>
+            <circle cx="26.8" cy="35.4" r="1.4" fill="#f7f0df"></circle>
+            <circle cx="37.2" cy="35.4" r="1.4" fill="#f7f0df"></circle>
+        </svg>
+    </button>
+    <button type="button" class="rover-bot rover-bot--2" data-rover-index="1" aria-label="Catch the ninja">
+        <svg viewBox="0 0 64 64" class="rover-svg" aria-hidden="true">
+            <path d="M32 8c10.7 0 19.5 8.2 20.5 18.7-4.9-2.9-10.6-4.5-16.7-4.5H28.2c-6.1 0-11.8 1.6-16.7 4.5C12.5 16.2 21.3 8 32 8Z" fill="currentColor"></path>
+            <path d="M15.5 28.5c4.1-3.1 9.2-4.8 14.7-4.8h3.6c5.5 0 10.6 1.7 14.7 4.8l-3.4 18.4c-0.4 2.4-2.5 4.1-4.9 4.1H23.8c-2.4 0-4.5-1.7-4.9-4.1Z" fill="currentColor"></path>
+            <path d="M20.5 30.2c2.6-2 5.9-3.1 9.4-3.1h4.2c3.5 0 6.8 1.1 9.4 3.1l-1.8 7.2H22.3Z" fill="rgba(15, 21, 29, 0.72)"></path>
+            <path d="M24.5 35.2c2.1-1.5 4.7-2.3 7.5-2.3s5.4 0.8 7.5 2.3" fill="none" stroke="#f7f0df" stroke-linecap="round" stroke-width="2.4"></path>
+            <path d="M19 18.5l9.2 4.6M45 18.5l-9.2 4.6" fill="none" stroke="#7ac7ff" stroke-linecap="round" stroke-width="3"></path>
+            <circle cx="26.8" cy="35.4" r="1.4" fill="#f7f0df"></circle>
+            <circle cx="37.2" cy="35.4" r="1.4" fill="#f7f0df"></circle>
+        </svg>
+    </button>
+    <button type="button" class="rover-bot rover-bot--3" data-rover-index="2" aria-label="Catch the ninja">
+        <svg viewBox="0 0 64 64" class="rover-svg" aria-hidden="true">
+            <path d="M32 8c10.7 0 19.5 8.2 20.5 18.7-4.9-2.9-10.6-4.5-16.7-4.5H28.2c-6.1 0-11.8 1.6-16.7 4.5C12.5 16.2 21.3 8 32 8Z" fill="currentColor"></path>
+            <path d="M15.5 28.5c4.1-3.1 9.2-4.8 14.7-4.8h3.6c5.5 0 10.6 1.7 14.7 4.8l-3.4 18.4c-0.4 2.4-2.5 4.1-4.9 4.1H23.8c-2.4 0-4.5-1.7-4.9-4.1Z" fill="currentColor"></path>
+            <path d="M20.5 30.2c2.6-2 5.9-3.1 9.4-3.1h4.2c3.5 0 6.8 1.1 9.4 3.1l-1.8 7.2H22.3Z" fill="rgba(15, 21, 29, 0.72)"></path>
+            <path d="M24.5 35.2c2.1-1.5 4.7-2.3 7.5-2.3s5.4 0.8 7.5 2.3" fill="none" stroke="#f7f0df" stroke-linecap="round" stroke-width="2.4"></path>
+            <path d="M19 18.5l9.2 4.6M45 18.5l-9.2 4.6" fill="none" stroke="#ffcd88" stroke-linecap="round" stroke-width="3"></path>
             <circle cx="26.8" cy="35.4" r="1.4" fill="#f7f0df"></circle>
             <circle cx="37.2" cy="35.4" r="1.4" fill="#f7f0df"></circle>
         </svg>
@@ -496,11 +519,12 @@ const wechatClose = document.getElementById('wechat-close');
 const wechatBackdrop = document.getElementById('wechat-backdrop');
 const themeToggle = document.getElementById('theme-toggle');
 const roverLayer = document.getElementById('rover-layer');
-const roverBot = document.getElementById('rover-bot');
+const roverBots = Array.from(document.querySelectorAll('.rover-bot'));
 const roverSpark = document.getElementById('rover-spark');
-let roverMoveTimer = null;
+const roverMoveIntervals = [1800, 2300, 2800];
+let roverMoveTimers = [];
 
-function moveRover() {
+function moveRover(roverBot) {
     if (!roverLayer || !roverBot) {
         return;
     }
@@ -520,15 +544,19 @@ function moveRover() {
 }
 
 function startRoverMotion() {
-    window.clearInterval(roverMoveTimer);
+    roverMoveTimers.forEach((timerId) => window.clearInterval(timerId));
+    roverMoveTimers = [];
     roverLayer.dataset.state = 'running';
-    moveRover();
-    roverMoveTimer = window.setInterval(() => {
-        moveRover();
-    }, 1800);
+    roverBots.forEach((roverBot, index) => {
+        moveRover(roverBot);
+        const timerId = window.setInterval(() => {
+            moveRover(roverBot);
+        }, roverMoveIntervals[index] || 1800);
+        roverMoveTimers.push(timerId);
+    });
 }
 
-function popSpark() {
+function popSpark(roverBot) {
     const roverRect = roverBot.getBoundingClientRect();
     roverSpark.style.left = `${roverRect.left + roverRect.width * 0.55}px`;
     roverSpark.style.top = `${roverRect.top - 10}px`;
@@ -577,17 +605,19 @@ document.addEventListener('keydown', (event) => {
         closeWechatModal();
     }
 });
-roverBot?.addEventListener('click', (event) => {
-    event.stopPropagation();
-    roverBot.classList.remove('is-hit');
-    void roverBot.offsetWidth;
-    roverBot.classList.add('is-hit');
-    popSpark();
-    window.setTimeout(moveRover, 260);
+roverBots.forEach((roverBot) => {
+    roverBot.addEventListener('click', (event) => {
+        event.stopPropagation();
+        roverBot.classList.remove('is-hit');
+        void roverBot.offsetWidth;
+        roverBot.classList.add('is-hit');
+        popSpark(roverBot);
+        window.setTimeout(() => moveRover(roverBot), 260);
+    });
 });
 window.addEventListener('resize', () => {
     if (roverLayer) {
-        moveRover();
+        roverBots.forEach((roverBot) => moveRover(roverBot));
     }
 });
 startRoverMotion();
