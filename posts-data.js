@@ -106,5 +106,14 @@ window.HENCY_BLOG_POSTS = [
         "summary": "",
         "markdown": "**文章标题：**HOMER:Learning In-the-Wild Mobile Manipulation\nvia Hybrid Imitation and Whole-Body Control\n**链接：**https://arxiv.org/pdf/2506.01185\n**总体架构：**\n![image](assets/blog_images/21.png)\n\n**Experiments:**\n",
         "updatedAt": "2026-05-10T05:59:13.307Z"
+    },
+    {
+        "title": "RDP",
+        "date": "2026-05-10",
+        "slug": "rdp",
+        "tags": "DP",
+        "summary": "",
+        "markdown": "**文章标题：**Reactive Diffusion Policy:\nSlow-Fast Visual-Tactile Policy Learning for Contact-Rich Manipulation\n**链接：**https://arxiv.org/pdf/2503.02881\n**总体架构：**\n![image](assets/blog_images/24.png)\n\n**Experiments:**\n1. core problems: \n1) tactile image vs tactile embedding, \n2) rdp(slow-fast closed-loop) vs dp\n2. baselines: DP/DP(T-image)/DP(T-embedding)/RDP(T-embedding)/RDP(F)\n3. benchmark = 任务设计 + 数据/环境 + 评价指标 + 实验协议:\n1）任务设计\n![image](assets/blog_images/26.png)\n2）数据/环境：真机数据\n3）metrics:\n![image](assets/blog_images/25.png)\n\n4）实验协议：\n第一，所有方法使用类似初始状态，通过**预定义图像手动对齐机器人和物体**。\n\n第二，Peeling 和 Wiping 设置三种测试变化：**无扰动**、**接触前扰动**、**接触后扰动**；Bimanual Lifting 设置软纸杯和硬纸杯两种变化。\n第三，每个 **test-time variation 运行 10 次**。\n第四，因为测试中有人类参与，论文采用了 **single-blind testing：每次随机选择一个模型评估，评估者不知道当前测试的是哪个模型，以减少主观判断影响**。\n第五，**控制频率也被规范化**：DP 和 RDP 的 slow policy 预测 12 FPS 的 action sequence；RDP fast policy 使用 24 FPS 的 tactile/force observation 并输出 24 FPS action（no sequence）；最终**动作插值**后以 500 Hz 发送给机器人。\n\n![image](assets/blog_images/28.png)\n## Writing Architecture\ndesign experiment questions：Q1、Q2、Q3、Q4、Q5、Q6、Q7\nA. Setup\n1) Hardware\n2) Baselines\n3) Tasks\n4) Evaluation Protocols\n5) Implementation Details\nB. Results\nQ1、Q2、Q3、Q4、Q5、Q6、Q7\n",
+        "updatedAt": "2026-05-10T07:01:15.882Z"
     }
 ];
