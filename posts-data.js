@@ -104,8 +104,8 @@ window.HENCY_BLOG_POSTS = [
         "slug": "homer",
         "tags": "DP",
         "summary": "",
-        "markdown": "**文章标题：**HOMER:Learning In-the-Wild Mobile Manipulation\nvia Hybrid Imitation and Whole-Body Control\n**链接：**https://arxiv.org/pdf/2506.01185\n**总体架构：**\n![image](assets/blog_images/21.png)\n\n**Experiments:**\n",
-        "updatedAt": "2026-05-10T05:59:13.307Z"
+        "markdown": "**文章标题：**HOMER:Learning In-the-Wild Mobile Manipulation\nvia Hybrid Imitation and Whole-Body Control\n**链接：**https://arxiv.org/pdf/2506.01185\n**总体架构：**\n![image](assets/blog_images/21.png)\n\n**Experiments:**\n1. core questions:\n1) Do **hybrid actions** help with multi-step tasks combining reaching and fine manipulation?\n2) Does the **WBC action space** improve performance compared to **decoupled base-arm actions**?\n3) Can HOMER **generalize** to novel object instances and spatial configurations?\n2. Baselines：DP(B+A)/DP(WBC)/Homer(B+A)/Homer(WBC)\n3. Task Performance Goal: wide workspaces, precise phases, and long horizons\n4. Benchmark:\n![image](assets/blog_images/22.png)\n![image](assets/blog_images/23.png)\n\n**success rate defination:**",
+        "updatedAt": "2026-05-10T08:54:20.393Z"
     },
     {
         "title": "RDP",
