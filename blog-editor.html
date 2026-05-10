@@ -617,6 +617,16 @@ function getAllPosts() {
     return mergePosts(getSitePosts(), getLocalPosts());
 }
 
+function isPublishablePost(post) {
+    const title = String(post.title || '').trim().toLowerCase();
+    const hasContent = Boolean(
+        String(post.markdown || '').trim()
+        || String(post.summary || '').trim()
+        || String(post.tags || '').trim()
+    );
+    return title !== 'untitled post' || hasContent;
+}
+
 function inlineMarkdown(value) {
     return value
         .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">')
@@ -813,6 +823,7 @@ function downloadFile(filename, content, type) {
 
 function buildPostsDataContent() {
     const posts = getAllPosts()
+        .filter(isPublishablePost)
         .sort((first, second) => String(second.date).localeCompare(String(first.date)));
     return `window.HENCY_BLOG_POSTS = ${JSON.stringify(posts, null, 4)};\n`;
 }

@@ -422,6 +422,16 @@ function parseTags(tags) {
         .filter(Boolean);
 }
 
+function isPublishablePost(post) {
+    const title = String(post.title || '').trim().toLowerCase();
+    const hasContent = Boolean(
+        String(post.markdown || '').trim()
+        || String(post.summary || '').trim()
+        || String(post.tags || '').trim()
+    );
+    return title !== 'untitled post' || hasContent;
+}
+
 function renderTagFilter(posts) {
     const tags = Array.from(new Set(posts.flatMap((post) => parseTags(post.tags)))).sort();
     tagFilter.innerHTML = '';
@@ -450,8 +460,9 @@ function renderTagFilter(posts) {
 
 if (savedPosts.length) {
     emptyPost.remove();
-    renderTagFilter(savedPosts);
-    savedPosts
+    const publishablePosts = savedPosts.filter(isPublishablePost);
+    renderTagFilter(publishablePosts);
+    publishablePosts
         .sort((first, second) => String(second.date).localeCompare(String(first.date)))
         .forEach((post) => {
             const item = document.createElement('li');
