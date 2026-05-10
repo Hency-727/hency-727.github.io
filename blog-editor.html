@@ -61,8 +61,43 @@
     .nav {
         display: flex;
         flex-wrap: wrap;
+        align-items: center;
         gap: 16px;
         font-size: 15px;
+    }
+
+    .theme-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: #2b241c;
+        cursor: pointer;
+        transition: color 180ms ease, transform 180ms ease;
+    }
+
+    .theme-toggle:hover {
+        transform: translateY(-1px);
+    }
+
+    .theme-icon {
+        display: none;
+    }
+
+    .theme-svg {
+        width: 24px;
+        height: 24px;
+        display: block;
+    }
+
+    html[data-theme="light"] .theme-icon-light,
+    html[data-theme="dark"] .theme-icon-dark {
+        display: block;
     }
 
     .actions {
@@ -312,6 +347,14 @@
         color: #aeb8c4;
     }
 
+    html[data-theme="dark"] .theme-toggle {
+        color: #e7dfd2;
+    }
+
+    html[data-theme="dark"] .theme-toggle:hover {
+        color: #ffffff;
+    }
+
     html[data-theme="dark"] input,
     html[data-theme="dark"] textarea,
     html[data-theme="dark"] .editor-grid,
@@ -400,6 +443,19 @@
             <nav class="nav" aria-label="Editor navigation">
                 <a href="blog.html">Blog</a>
                 <a href="index.html">Home</a>
+                <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false" aria-label="Toggle color theme">
+                    <span class="theme-icon theme-icon-light" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" class="theme-svg">
+                            <path d="M15.8 3.2a8.9 8.9 0 1 0 5 16.4 8.1 8.1 0 1 1-5-16.4Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path>
+                        </svg>
+                    </span>
+                    <span class="theme-icon theme-icon-dark" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" class="theme-svg">
+                            <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"></circle>
+                            <path d="M12 1.8v3.1M12 19.1v3.1M22.2 12h-3.1M4.9 12H1.8M19.2 4.8l-2.2 2.2M7 17l-2.2 2.2M19.2 19.2 17 17M7 7 4.8 4.8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+                        </svg>
+                    </span>
+                </button>
             </nav>
             <div class="actions">
                 <button type="button" class="button" id="new-post">New post</button>
@@ -478,6 +534,7 @@ const fields = {
 const preview = document.getElementById('preview');
 const statusText = document.getElementById('status');
 const postManagerList = document.getElementById('post-manager-list');
+const themeToggle = document.getElementById('theme-toggle');
 const draftKey = 'hency-blog-draft';
 const postsKey = 'hency-blog-posts';
 const deletedPostsKey = 'hency-blog-deleted-posts';
@@ -489,6 +546,20 @@ function today() {
 
 function setStatus(message) {
     statusText.textContent = message;
+}
+
+function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem('theme-preference', theme);
+    if (themeToggle) {
+        const isDark = theme === 'dark';
+        themeToggle.setAttribute('aria-pressed', String(isDark));
+        themeToggle.setAttribute(
+            'aria-label',
+            isDark ? 'Switch to light mode' : 'Switch to dark mode'
+        );
+        themeToggle.title = isDark ? 'Light mode' : 'Dark mode';
+    }
 }
 
 function slugify(value) {
@@ -847,6 +918,12 @@ fields.title.addEventListener('input', () => {
     if (!slugEdited) {
         fields.slug.value = slugify(fields.title.value);
     }
+});
+applyTheme(document.documentElement.dataset.theme || 'light');
+themeToggle?.addEventListener('click', () => {
+    const nextTheme =
+        document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    applyTheme(nextTheme);
 });
 document.getElementById('new-post').addEventListener('click', clearEditor);
 document.getElementById('save-draft').addEventListener('click', saveDraft);
