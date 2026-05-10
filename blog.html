@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hency | Blog</title>
+<script>
+(() => {
+    const storedTheme = localStorage.getItem('theme-preference');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = storedTheme || (prefersDark ? 'dark' : 'light');
+    document.documentElement.dataset.theme = theme;
+})();
+</script>
+<style>
+    html {
+        color-scheme: light;
+    }
+
+    html[data-theme="dark"] {
+        color-scheme: dark;
+    }
+
+    body {
+        margin: 0;
+        font-family: "Courier New", monospace;
+        background: #faf8f2;
+        color: #222;
+        transition: background-color 180ms ease, color 180ms ease;
+    }
+
+    a {
+        color: #1a5fd0;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .page {
+        width: min(760px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 42px 0 56px;
+    }
+
+    .site-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-bottom: 34px;
+        font-size: 15px;
+    }
+
+    .site-title {
+        margin: 0 0 10px;
+        font-size: 34px;
+        line-height: 1.2;
+        font-weight: normal;
+    }
+
+    .intro {
+        margin: 0 0 38px;
+        max-width: 620px;
+        color: #555;
+        line-height: 1.65;
+    }
+
+    .post-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .tag-filter {
+        display: none;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 0 0 18px;
+    }
+
+    .tag-filter.is-visible {
+        display: flex;
+    }
+
+    .tag-button,
+    .post-tag {
+        display: inline-flex;
+        align-items: center;
+        min-height: 26px;
+        padding: 3px 9px;
+        border: 1px solid #ddd4c3;
+        background: #fffdf8;
+        color: #5a4d3c;
+        font: inherit;
+        font-size: 13px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .tag-button.is-active {
+        border-color: #2f4f4f;
+        background: #2f4f4f;
+        color: #fffdf8;
+    }
+
+    .post-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin: 10px 0 0;
+    }
+
+    .post-tag {
+        cursor: default;
+    }
+
+    .post {
+        padding: 24px 0;
+        border-top: 1px solid #ddd4c3;
+    }
+
+    .post:last-child {
+        border-bottom: 1px solid #ddd4c3;
+    }
+
+    .post-title {
+        margin: 0 0 6px;
+        font-size: 22px;
+        line-height: 1.35;
+        font-weight: normal;
+    }
+
+    .post-meta {
+        margin: 0 0 10px;
+        color: #777;
+        font-size: 14px;
+    }
+
+    .post-summary {
+        margin: 0;
+        color: #333;
+        line-height: 1.65;
+    }
+
+    .post-body {
+        display: none;
+        margin-top: 18px;
+        padding-top: 16px;
+        border-top: 1px solid #ddd4c3;
+        line-height: 1.65;
+    }
+
+    .post.is-open .post-body {
+        display: block;
+    }
+
+    .post-body h1,
+    .post-body h2,
+    .post-body h3 {
+        line-height: 1.3;
+    }
+
+    .post-body blockquote {
+        margin-left: 0;
+        padding-left: 14px;
+        border-left: 3px solid #9b7b45;
+        color: #5a4d3c;
+    }
+
+    .post-body pre {
+        overflow: auto;
+        padding: 12px;
+        background: #f3efe3;
+    }
+
+    .post-body code {
+        padding: 1px 4px;
+        background: #f3efe3;
+    }
+
+    .post-body pre code {
+        padding: 0;
+        background: transparent;
+    }
+
+    .post-body img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #ddd4c3;
+        background: #fff;
+    }
+
+    .footer {
+        margin-top: 36px;
+        color: #777;
+        font-size: 14px;
+    }
+
+    html[data-theme="dark"] body {
+        background:
+            radial-gradient(circle at top right, rgba(73, 99, 165, 0.18), transparent 28%),
+            radial-gradient(circle at top left, rgba(143, 95, 40, 0.14), transparent 25%),
+            #111419;
+        color: #e7dfd2;
+    }
+
+    html[data-theme="dark"] a {
+        color: #7ac7ff;
+    }
+
+    html[data-theme="dark"] .intro,
+    html[data-theme="dark"] .post-meta,
+    html[data-theme="dark"] .footer {
+        color: #aeb8c4;
+    }
+
+    html[data-theme="dark"] .post {
+        border-color: #2c3642;
+    }
+
+    html[data-theme="dark"] .tag-button,
+    html[data-theme="dark"] .post-tag {
+        border-color: #2c3642;
+        background: rgba(20, 25, 32, 0.94);
+        color: #c9d7e6;
+    }
+
+    html[data-theme="dark"] .tag-button.is-active {
+        border-color: #7ac7ff;
+        background: #7ac7ff;
+        color: #111419;
+    }
+
+    html[data-theme="dark"] .post-body {
+        border-top-color: #2c3642;
+    }
+
+    html[data-theme="dark"] .post-summary {
+        color: #d7deea;
+    }
+
+    html[data-theme="dark"] .post-body blockquote {
+        border-left-color: #7ac7ff;
+        color: #c9d7e6;
+    }
+
+    html[data-theme="dark"] .post-body pre,
+    html[data-theme="dark"] .post-body code {
+        background: #1a212b;
+    }
+
+    html[data-theme="dark"] .post-body img {
+        border-color: #2c3642;
+        background: #171d25;
+    }
+
+    @media (max-width: 640px) {
+        .page {
+            width: min(100% - 24px, 760px);
+            padding-top: 26px;
+        }
+
+        .site-title {
+            font-size: 30px;
+        }
+
+        .post-title {
+            font-size: 20px;
+        }
+    }
+</style>
+</head>
+<body>
+    <main class="page">
+        <nav class="site-nav" aria-label="Blog navigation">
+            <a href="index.html">Home</a>
+            <!-- <a href="index.html#publications">Publications</a> -->
+            <!-- <a href="index.html#projects">Projects</a> -->
+            <a href="blog-editor.html">Editor</a>
+        </nav>
+
+        <header>
+            <h1 class="site-title">Hency's Blog</h1>
+            <p class="intro">
+                Notes on robotics, robot learning, reading, experiments, and things worth.
+            </p>
+        </header>
+
+        <div class="tag-filter" id="tag-filter" aria-label="Filter by tag"></div>
+
+        <ul class="post-list" id="post-list">
+            <li class="post" id="empty-post">
+                <h2 class="post-title">
+                    <a href="#">Coming soon</a>
+                </h2>
+                <p class="post-meta">May 2026</p>
+                <p class="post-summary">
+                    The blog is ready. New posts can be added here as simple dated entries.
+                </p>
+            </li>
+        </ul>
+
+        <footer class="footer">
+            <p>&copy; 2026 Hency.</p>
+        </footer>
+    </main>
+<script>
+const postList = document.getElementById('post-list');
+const emptyPost = document.getElementById('empty-post');
+const tagFilter = document.getElementById('tag-filter');
+const savedPosts = JSON.parse(localStorage.getItem('hency-blog-posts') || '[]');
+
+function escapeHtml(value) {
+    return value.replace(/[&<>"']/g, (character) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+    }[character]));
+}
+
+function inlineMarkdown(value) {
+    return value
+        .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">')
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*([^*]+)\*/g, '<em>$1</em>');
+}
+
+function markdownToHtml(markdown) {
+    const lines = escapeHtml(markdown || '').split('\n');
+    const html = [];
+    let inCode = false;
+    let inList = false;
+
+    lines.forEach((line) => {
+        if (line.startsWith('```')) {
+            if (inCode) {
+                html.push('</code></pre>');
+                inCode = false;
+            } else {
+                if (inList) {
+                    html.push('</ul>');
+                    inList = false;
+                }
+                html.push('<pre><code>');
+                inCode = true;
+            }
+            return;
+        }
+
+        if (inCode) {
+            html.push(`${line}\n`);
+            return;
+        }
+
+        if (/^- /.test(line)) {
+            if (!inList) {
+                html.push('<ul>');
+                inList = true;
+            }
+            html.push(`<li>${inlineMarkdown(line.slice(2))}</li>`);
+            return;
+        }
+
+        if (inList) {
+            html.push('</ul>');
+            inList = false;
+        }
+
+        if (!line.trim()) {
+            html.push('');
+        } else if (line.startsWith('### ')) {
+            html.push(`<h3>${inlineMarkdown(line.slice(4))}</h3>`);
+        } else if (line.startsWith('## ')) {
+            html.push(`<h2>${inlineMarkdown(line.slice(3))}</h2>`);
+        } else if (line.startsWith('# ')) {
+            html.push(`<h1>${inlineMarkdown(line.slice(2))}</h1>`);
+        } else if (line.startsWith('> ')) {
+            html.push(`<blockquote>${inlineMarkdown(line.slice(2))}</blockquote>`);
+        } else {
+            html.push(`<p>${inlineMarkdown(line)}</p>`);
+        }
+    });
+
+    if (inList) {
+        html.push('</ul>');
+    }
+    if (inCode) {
+        html.push('</code></pre>');
+    }
+
+    return html.join('\n');
+}
+
+function parseTags(tags) {
+    return String(tags || '')
+        .split(',')
+        .map((tag) => tag.trim())
+        .filter(Boolean);
+}
+
+function renderTagFilter(posts) {
+    const tags = Array.from(new Set(posts.flatMap((post) => parseTags(post.tags)))).sort();
+    tagFilter.innerHTML = '';
+    if (!tags.length) {
+        tagFilter.classList.remove('is-visible');
+        return;
+    }
+
+    tagFilter.classList.add('is-visible');
+    const allButton = document.createElement('button');
+    allButton.type = 'button';
+    allButton.className = 'tag-button is-active';
+    allButton.dataset.filterTag = '';
+    allButton.textContent = 'All';
+    tagFilter.appendChild(allButton);
+
+    tags.forEach((tag) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'tag-button';
+        button.dataset.filterTag = tag;
+        button.textContent = tag;
+        tagFilter.appendChild(button);
+    });
+}
+
+if (savedPosts.length) {
+    emptyPost.remove();
+    renderTagFilter(savedPosts);
+    savedPosts
+        .sort((first, second) => String(second.date).localeCompare(String(first.date)))
+        .forEach((post) => {
+            const item = document.createElement('li');
+            item.className = 'post';
+            item.id = post.slug;
+            item.dataset.tags = parseTags(post.tags).join(',');
+            item.innerHTML = `
+                <h2 class="post-title">
+                    <a href="#${encodeURIComponent(post.slug)}" data-toggle-post>${escapeHtml(post.title)}</a>
+                </h2>
+                <p class="post-meta">${escapeHtml(post.date || 'Undated')}</p>
+                <p class="post-summary">${escapeHtml(post.summary || '')}</p>
+                ${parseTags(post.tags).length ? `<div class="post-tags">${parseTags(post.tags).map((tag) => `<span class="post-tag">${escapeHtml(tag)}</span>`).join('')}</div>` : ''}
+                <div class="post-body">${markdownToHtml(post.markdown || '')}</div>
+            `;
+            postList.appendChild(item);
+        });
+}
+
+tagFilter.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-filter-tag]');
+    if (!button) {
+        return;
+    }
+    const selectedTag = button.dataset.filterTag;
+    tagFilter.querySelectorAll('.tag-button').forEach((tagButton) => {
+        tagButton.classList.toggle('is-active', tagButton === button);
+    });
+    postList.querySelectorAll('.post').forEach((post) => {
+        if (!selectedTag) {
+            post.hidden = false;
+            return;
+        }
+        const tags = post.dataset.tags.split(',');
+        post.hidden = !tags.includes(selectedTag);
+    });
+});
+
+postList.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-toggle-post]');
+    if (!trigger) {
+        return;
+    }
+    event.preventDefault();
+    const post = trigger.closest('.post');
+    post.classList.toggle('is-open');
+    if (post.classList.contains('is-open')) {
+        history.replaceState(null, '', `#${post.id}`);
+    }
+});
+
+const currentPost = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+if (currentPost) {
+    currentPost.classList.add('is-open');
+}
+</script>
+</body>
+</html>

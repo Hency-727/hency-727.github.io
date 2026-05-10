@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hency | Blog Editor</title>
+<script>
+(() => {
+    const storedTheme = localStorage.getItem('theme-preference');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = storedTheme || (prefersDark ? 'dark' : 'light');
+    document.documentElement.dataset.theme = theme;
+})();
+</script>
+<style>
+    html {
+        color-scheme: light;
+    }
+
+    html[data-theme="dark"] {
+        color-scheme: dark;
+    }
+
+    body {
+        margin: 0;
+        font-family: "Courier New", monospace;
+        background: #faf8f2;
+        color: #222;
+    }
+
+    a {
+        color: #1a5fd0;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    button,
+    input,
+    textarea {
+        font: inherit;
+    }
+
+    .page {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 28px 0 42px;
+    }
+
+    .topbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 22px;
+    }
+
+    .nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        font-size: 15px;
+    }
+
+    .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 34px;
+        padding: 7px 12px;
+        border: 1px solid #222;
+        background: transparent;
+        color: #222;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .button:hover {
+        background: #222;
+        color: #faf8f2;
+        text-decoration: none;
+    }
+
+    .button-primary {
+        border-color: #2f4f4f;
+        background: #2f4f4f;
+        color: #fffdf8;
+    }
+
+    .button-danger {
+        border-color: #c0392b;
+        color: #c0392b;
+    }
+
+    .button-danger:hover {
+        background: #c0392b;
+        color: #fffdf8;
+    }
+
+    .title-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 170px;
+        gap: 14px;
+        margin-bottom: 14px;
+    }
+
+    .meta-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 14px;
+        margin-bottom: 14px;
+    }
+
+    .field {
+        display: grid;
+        gap: 6px;
+    }
+
+    label {
+        color: #555;
+        font-size: 13px;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        border: 1px solid #ddd4c3;
+        background: #fffdf8;
+        color: #222;
+        box-sizing: border-box;
+    }
+
+    input {
+        min-height: 38px;
+        padding: 8px 10px;
+    }
+
+    .summary {
+        min-height: 76px;
+        margin-bottom: 14px;
+        padding: 10px;
+        resize: vertical;
+    }
+
+    .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 10px;
+        border: 1px solid #ddd4c3;
+        border-bottom: 0;
+        background: #f3efe3;
+    }
+
+    .tool {
+        min-width: 34px;
+        height: 32px;
+        padding: 0 9px;
+        border: 1px solid #cfc4af;
+        background: #fffdf8;
+        color: #222;
+        cursor: pointer;
+    }
+
+    .tool:hover {
+        border-color: #2f4f4f;
+        color: #2f4f4f;
+    }
+
+    .editor-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        min-height: 520px;
+        border: 1px solid #ddd4c3;
+        background: #fffdf8;
+    }
+
+    .markdown-input {
+        min-height: 520px;
+        padding: 18px;
+        border: 0;
+        border-right: 1px solid #ddd4c3;
+        resize: vertical;
+        line-height: 1.6;
+    }
+
+    .preview {
+        min-width: 0;
+        padding: 18px 22px;
+        overflow-wrap: anywhere;
+        line-height: 1.65;
+    }
+
+    .preview h1,
+    .preview h2,
+    .preview h3 {
+        line-height: 1.3;
+    }
+
+    .preview blockquote {
+        margin-left: 0;
+        padding-left: 14px;
+        border-left: 3px solid #9b7b45;
+        color: #5a4d3c;
+    }
+
+    .preview pre {
+        overflow: auto;
+        padding: 12px;
+        background: #f3efe3;
+    }
+
+    .preview code {
+        padding: 1px 4px;
+        background: #f3efe3;
+    }
+
+    .preview pre code {
+        padding: 0;
+        background: transparent;
+    }
+
+    .preview img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #ddd4c3;
+        background: #fff;
+    }
+
+    .status {
+        min-height: 22px;
+        margin: 12px 0 0;
+        color: #666;
+        font-size: 13px;
+    }
+
+    .manager {
+        margin-top: 22px;
+        padding-top: 18px;
+        border-top: 1px solid #ddd4c3;
+    }
+
+    .manager h2 {
+        margin: 0 0 10px;
+        font-size: 18px;
+        font-weight: normal;
+    }
+
+    .post-manager-list {
+        display: grid;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .post-manager-item {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 12px;
+        align-items: center;
+        padding: 10px 12px;
+        border: 1px solid #ddd4c3;
+        background: #fffdf8;
+    }
+
+    .post-manager-title {
+        margin: 0 0 4px;
+        line-height: 1.35;
+    }
+
+    .post-manager-meta {
+        margin: 0;
+        color: #777;
+        font-size: 13px;
+    }
+
+    .post-manager-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: flex-end;
+    }
+
+    .hidden-input {
+        display: none;
+    }
+
+    html[data-theme="dark"] body {
+        background:
+            radial-gradient(circle at top right, rgba(73, 99, 165, 0.18), transparent 28%),
+            radial-gradient(circle at top left, rgba(143, 95, 40, 0.14), transparent 25%),
+            #111419;
+        color: #e7dfd2;
+    }
+
+    html[data-theme="dark"] a {
+        color: #7ac7ff;
+    }
+
+    html[data-theme="dark"] label,
+    html[data-theme="dark"] .status {
+        color: #aeb8c4;
+    }
+
+    html[data-theme="dark"] input,
+    html[data-theme="dark"] textarea,
+    html[data-theme="dark"] .editor-grid,
+    html[data-theme="dark"] .post-manager-item,
+    html[data-theme="dark"] .tool {
+        border-color: #2c3642;
+        background: rgba(20, 25, 32, 0.94);
+        color: #f3ecdf;
+    }
+
+    html[data-theme="dark"] .toolbar {
+        border-color: #2c3642;
+        background: rgba(30, 38, 49, 0.98);
+    }
+
+    html[data-theme="dark"] .manager {
+        border-top-color: #2c3642;
+    }
+
+    html[data-theme="dark"] .post-manager-meta {
+        color: #aeb8c4;
+    }
+
+    html[data-theme="dark"] .markdown-input {
+        border-right-color: #2c3642;
+    }
+
+    html[data-theme="dark"] .button {
+        border-color: #7ac7ff;
+        color: #7ac7ff;
+    }
+
+    html[data-theme="dark"] .button:hover,
+    html[data-theme="dark"] .button-primary {
+        background: #7ac7ff;
+        color: #111419;
+    }
+
+    html[data-theme="dark"] .button-danger {
+        border-color: #ff8f87;
+        color: #ff8f87;
+    }
+
+    html[data-theme="dark"] .button-danger:hover {
+        background: #ff8f87;
+        color: #111419;
+    }
+
+    html[data-theme="dark"] .preview blockquote {
+        border-left-color: #7ac7ff;
+        color: #c9d7e6;
+    }
+
+    html[data-theme="dark"] .preview pre,
+    html[data-theme="dark"] .preview code {
+        background: #1a212b;
+    }
+
+    html[data-theme="dark"] .preview img {
+        border-color: #2c3642;
+        background: #171d25;
+    }
+
+    @media (max-width: 860px) {
+        .title-row,
+        .meta-row,
+        .post-manager-item,
+        .editor-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .markdown-input {
+            border-right: 0;
+            border-bottom: 1px solid #ddd4c3;
+        }
+
+        html[data-theme="dark"] .markdown-input {
+            border-bottom-color: #2c3642;
+        }
+    }
+</style>
+</head>
+<body>
+    <main class="page">
+        <div class="topbar">
+            <nav class="nav" aria-label="Editor navigation">
+                <a href="blog.html">Blog</a>
+                <a href="index.html">Home</a>
+            </nav>
+            <div class="actions">
+                <button type="button" class="button" id="new-post">New post</button>
+                <button type="button" class="button" id="save-draft">Save draft</button>
+                <button type="button" class="button button-primary" id="publish-local">Publish local</button>
+                <button type="button" class="button" id="export-md">Export MD</button>
+                <button type="button" class="button" id="copy-html">Copy HTML</button>
+            </div>
+        </div>
+
+        <section aria-label="Post metadata">
+            <div class="title-row">
+                <div class="field">
+                    <label for="title">Title</label>
+                    <input id="title" type="text" placeholder="Untitled post">
+                </div>
+                <div class="field">
+                    <label for="date">Date</label>
+                    <input id="date" type="date">
+                </div>
+            </div>
+            <div class="meta-row">
+                <div class="field">
+                    <label for="slug">Slug</label>
+                    <input id="slug" type="text" placeholder="untitled-post">
+                </div>
+                <div class="field">
+                    <label for="tags">Tags</label>
+                    <input id="tags" type="text" placeholder="Robotics, Notes">
+                </div>
+            </div>
+            <div class="field">
+                <label for="summary">Summary</label>
+                <textarea class="summary" id="summary" placeholder="Short summary for the blog list."></textarea>
+            </div>
+        </section>
+
+        <section aria-label="Post editor">
+            <div class="toolbar" role="toolbar" aria-label="Markdown toolbar">
+                <button type="button" class="tool" data-wrap="**" title="Bold"><b>B</b></button>
+                <button type="button" class="tool" data-wrap="*" title="Italic"><i>I</i></button>
+                <button type="button" class="tool" data-prefix="# " title="Heading 1">H1</button>
+                <button type="button" class="tool" data-prefix="## " title="Heading 2">H2</button>
+                <button type="button" class="tool" data-prefix="- " title="List">List</button>
+                <button type="button" class="tool" data-prefix="> " title="Quote">Quote</button>
+                <button type="button" class="tool" data-wrap="`" title="Code">Code</button>
+                <button type="button" class="tool" id="insert-link" title="Link">Link</button>
+                <button type="button" class="tool" id="insert-image-url" title="Image URL">Image</button>
+                <button type="button" class="tool" id="upload-image" title="Upload image">Upload</button>
+                <input class="hidden-input" id="image-file" type="file" accept="image/*">
+            </div>
+            <div class="editor-grid">
+                <textarea id="markdown" class="markdown-input" spellcheck="true" placeholder="# Title&#10;&#10;Start writing here..."></textarea>
+                <article id="preview" class="preview" aria-label="Preview"></article>
+            </div>
+            <p class="status" id="status"></p>
+        </section>
+
+        <section class="manager" aria-label="Published posts">
+            <h2>Published posts</h2>
+            <ul class="post-manager-list" id="post-manager-list"></ul>
+        </section>
+    </main>
+
+<script>
+const fields = {
+    title: document.getElementById('title'),
+    date: document.getElementById('date'),
+    slug: document.getElementById('slug'),
+    tags: document.getElementById('tags'),
+    summary: document.getElementById('summary'),
+    markdown: document.getElementById('markdown'),
+};
+const preview = document.getElementById('preview');
+const statusText = document.getElementById('status');
+const postManagerList = document.getElementById('post-manager-list');
+const draftKey = 'hency-blog-draft';
+const postsKey = 'hency-blog-posts';
+let slugEdited = false;
+
+function today() {
+    return new Date().toISOString().slice(0, 10);
+}
+
+function setStatus(message) {
+    statusText.textContent = message;
+}
+
+function slugify(value) {
+    return value
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        || 'untitled-post';
+}
+
+function escapeHtml(value) {
+    return value.replace(/[&<>"']/g, (character) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+    }[character]));
+}
+
+function inlineMarkdown(value) {
+    return value
+        .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">')
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*([^*]+)\*/g, '<em>$1</em>');
+}
+
+function markdownToHtml(markdown) {
+    const lines = escapeHtml(markdown).split('\n');
+    const html = [];
+    let inCode = false;
+    let inList = false;
+
+    lines.forEach((line) => {
+        if (line.startsWith('```')) {
+            if (inCode) {
+                html.push('</code></pre>');
+                inCode = false;
+            } else {
+                if (inList) {
+                    html.push('</ul>');
+                    inList = false;
+                }
+                html.push('<pre><code>');
+                inCode = true;
+            }
+            return;
+        }
+
+        if (inCode) {
+            html.push(`${line}\n`);
+            return;
+        }
+
+        if (/^- /.test(line)) {
+            if (!inList) {
+                html.push('<ul>');
+                inList = true;
+            }
+            html.push(`<li>${inlineMarkdown(line.slice(2))}</li>`);
+            return;
+        }
+
+        if (inList) {
+            html.push('</ul>');
+            inList = false;
+        }
+
+        if (!line.trim()) {
+            html.push('');
+        } else if (line.startsWith('### ')) {
+            html.push(`<h3>${inlineMarkdown(line.slice(4))}</h3>`);
+        } else if (line.startsWith('## ')) {
+            html.push(`<h2>${inlineMarkdown(line.slice(3))}</h2>`);
+        } else if (line.startsWith('# ')) {
+            html.push(`<h1>${inlineMarkdown(line.slice(2))}</h1>`);
+        } else if (line.startsWith('> ')) {
+            html.push(`<blockquote>${inlineMarkdown(line.slice(2))}</blockquote>`);
+        } else {
+            html.push(`<p>${inlineMarkdown(line)}</p>`);
+        }
+    });
+
+    if (inList) {
+        html.push('</ul>');
+    }
+    if (inCode) {
+        html.push('</code></pre>');
+    }
+
+    return html.join('\n');
+}
+
+function renderPreview() {
+    preview.innerHTML = markdownToHtml(fields.markdown.value);
+}
+
+function getPost() {
+    return {
+        title: fields.title.value.trim() || 'Untitled post',
+        date: fields.date.value || today(),
+        slug: slugify(fields.slug.value),
+        tags: fields.tags.value.trim(),
+        summary: fields.summary.value.trim(),
+        markdown: fields.markdown.value,
+        updatedAt: new Date().toISOString(),
+    };
+}
+
+function fillPost(post) {
+    fields.title.value = post.title || '';
+    fields.date.value = post.date || today();
+    fields.slug.value = post.slug || slugify(post.title || '');
+    fields.tags.value = post.tags || '';
+    fields.summary.value = post.summary || '';
+    fields.markdown.value = post.markdown || '';
+    renderPreview();
+}
+
+function clearEditor() {
+    slugEdited = false;
+    fillPost({
+        title: '',
+        date: today(),
+        slug: '',
+        tags: '',
+        summary: '',
+        markdown: '',
+    });
+    localStorage.removeItem(draftKey);
+    setStatus('New post ready. Fill title, tags, summary, and content, then publish local.');
+}
+
+function insertAtCursor(before, after = '', placeholder = '') {
+    const input = fields.markdown;
+    const start = input.selectionStart;
+    const end = input.selectionEnd;
+    const selected = input.value.slice(start, end) || placeholder;
+    input.value = `${input.value.slice(0, start)}${before}${selected}${after}${input.value.slice(end)}`;
+    input.focus();
+    input.selectionStart = start + before.length;
+    input.selectionEnd = start + before.length + selected.length;
+    renderPreview();
+}
+
+function prefixLine(prefix) {
+    const input = fields.markdown;
+    const start = input.selectionStart;
+    const lineStart = input.value.lastIndexOf('\n', start - 1) + 1;
+    input.value = `${input.value.slice(0, lineStart)}${prefix}${input.value.slice(lineStart)}`;
+    input.focus();
+    input.selectionStart = start + prefix.length;
+    input.selectionEnd = input.selectionStart;
+    renderPreview();
+}
+
+function saveDraft() {
+    localStorage.setItem(draftKey, JSON.stringify(getPost()));
+    setStatus('Draft saved.');
+}
+
+function publishLocal() {
+    const post = getPost();
+    const posts = JSON.parse(localStorage.getItem(postsKey) || '[]');
+    const nextPosts = posts.filter((item) => item.slug !== post.slug);
+    nextPosts.push(post);
+    localStorage.setItem(postsKey, JSON.stringify(nextPosts));
+    localStorage.setItem(draftKey, JSON.stringify(post));
+    renderPostManager();
+    setStatus('Published locally. Open Blog to see it on this browser.');
+}
+
+function renderPostManager() {
+    const posts = JSON.parse(localStorage.getItem(postsKey) || '[]')
+        .sort((first, second) => String(second.date).localeCompare(String(first.date)));
+    postManagerList.innerHTML = '';
+
+    if (!posts.length) {
+        const emptyItem = document.createElement('li');
+        emptyItem.className = 'post-manager-item';
+        emptyItem.innerHTML = '<p class="post-manager-meta">No local posts yet.</p>';
+        postManagerList.appendChild(emptyItem);
+        return;
+    }
+
+    posts.forEach((post) => {
+        const item = document.createElement('li');
+        item.className = 'post-manager-item';
+        item.innerHTML = `
+            <div>
+                <p class="post-manager-title">${escapeHtml(post.title || 'Untitled post')}</p>
+                <p class="post-manager-meta">${escapeHtml(post.date || 'Undated')} | ${escapeHtml(post.slug || '')}${post.tags ? ` | ${escapeHtml(post.tags)}` : ''}</p>
+            </div>
+            <div class="post-manager-actions">
+                <button type="button" class="button" data-edit-post="${escapeHtml(post.slug)}">Edit</button>
+                <button type="button" class="button button-danger" data-delete-post="${escapeHtml(post.slug)}">Delete</button>
+            </div>
+        `;
+        postManagerList.appendChild(item);
+    });
+}
+
+function downloadMarkdown() {
+    const post = getPost();
+    const frontMatter = [
+        '---',
+        `title: "${post.title.replace(/"/g, '\\"')}"`,
+        `date: ${post.date}`,
+        `tags: ${post.tags}`,
+        '---',
+        '',
+    ].join('\n');
+    const blob = new Blob([frontMatter + post.markdown], { type: 'text/markdown' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${post.slug}.md`;
+    link.click();
+    URL.revokeObjectURL(link.href);
+    setStatus('Markdown exported.');
+}
+
+async function copyHtmlSnippet() {
+    const post = getPost();
+    const snippet = `<li class="post">
+    <h2 class="post-title">
+        <a href="#">${escapeHtml(post.title)}</a>
+    </h2>
+    <p class="post-meta">${escapeHtml(post.date)}${post.tags ? ` | ${escapeHtml(post.tags)}` : ''}</p>
+    <p class="post-summary">${escapeHtml(post.summary)}</p>
+</li>`;
+    await navigator.clipboard.writeText(snippet);
+    setStatus('HTML copied.');
+}
+
+document.querySelectorAll('.tool[data-wrap]').forEach((button) => {
+    button.addEventListener('click', () => {
+        const mark = button.dataset.wrap;
+        insertAtCursor(mark, mark, 'text');
+    });
+});
+
+document.querySelectorAll('.tool[data-prefix]').forEach((button) => {
+    button.addEventListener('click', () => prefixLine(button.dataset.prefix));
+});
+
+document.getElementById('insert-link').addEventListener('click', () => {
+    insertAtCursor('[', '](https://example.com)', 'link text');
+});
+
+document.getElementById('insert-image-url').addEventListener('click', () => {
+    insertAtCursor('![image](', ')', 'assets/blog_images/example.png');
+});
+
+document.getElementById('upload-image').addEventListener('click', () => {
+    document.getElementById('image-file').click();
+});
+
+document.getElementById('image-file').addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (!file) {
+        return;
+    }
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+        insertAtCursor(`![${file.name}](${reader.result})`);
+        setStatus('Image inserted.');
+    });
+    reader.readAsDataURL(file);
+    event.target.value = '';
+});
+
+fields.markdown.addEventListener('input', renderPreview);
+fields.slug.addEventListener('input', () => {
+    slugEdited = true;
+});
+fields.title.addEventListener('input', () => {
+    if (!slugEdited) {
+        fields.slug.value = slugify(fields.title.value);
+    }
+});
+document.getElementById('new-post').addEventListener('click', clearEditor);
+document.getElementById('save-draft').addEventListener('click', saveDraft);
+document.getElementById('publish-local').addEventListener('click', publishLocal);
+document.getElementById('export-md').addEventListener('click', downloadMarkdown);
+document.getElementById('copy-html').addEventListener('click', () => {
+    copyHtmlSnippet().catch(() => setStatus('Clipboard is not available in this browser.'));
+});
+postManagerList.addEventListener('click', (event) => {
+    const editButton = event.target.closest('[data-edit-post]');
+    if (!editButton) {
+        const deleteButton = event.target.closest('[data-delete-post]');
+        if (!deleteButton) {
+            return;
+        }
+        const slugToDelete = deleteButton.dataset.deletePost;
+        const postTitle = deleteButton.closest('.post-manager-item')?.querySelector('.post-manager-title')?.textContent || slugToDelete;
+        if (!window.confirm(`Delete "${postTitle}"?`)) {
+            return;
+        }
+        const posts = JSON.parse(localStorage.getItem(postsKey) || '[]');
+        const nextPosts = posts.filter((item) => item.slug !== slugToDelete);
+        localStorage.setItem(postsKey, JSON.stringify(nextPosts));
+        if (fields.slug.value === slugToDelete) {
+            clearEditor();
+        }
+        renderPostManager();
+        setStatus(`Deleted "${postTitle}".`);
+        return;
+    }
+    const posts = JSON.parse(localStorage.getItem(postsKey) || '[]');
+    const post = posts.find((item) => item.slug === editButton.dataset.editPost);
+    if (post) {
+        slugEdited = true;
+        fillPost(post);
+        setStatus(`Editing "${post.title}". Publish local will overwrite this post.`);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+});
+
+const params = new URLSearchParams(window.location.search);
+const slug = params.get('slug');
+const posts = JSON.parse(localStorage.getItem(postsKey) || '[]');
+const postFromSlug = posts.find((post) => post.slug === slug);
+const draft = JSON.parse(localStorage.getItem(draftKey) || 'null');
+
+fillPost(postFromSlug || draft || {
+    title: '',
+    date: today(),
+    slug: '',
+    tags: '',
+    summary: '',
+    markdown: '',
+});
+renderPostManager();
+</script>
+</body>
+</html>
