@@ -305,11 +305,15 @@
             <p>&copy; 2026 Hency.</p>
         </footer>
     </main>
+<script src="posts-data.js"></script>
 <script>
 const postList = document.getElementById('post-list');
 const emptyPost = document.getElementById('empty-post');
 const tagFilter = document.getElementById('tag-filter');
-const savedPosts = JSON.parse(localStorage.getItem('hency-blog-posts') || '[]');
+const sitePosts = Array.isArray(window.HENCY_BLOG_POSTS) ? window.HENCY_BLOG_POSTS : [];
+const localPosts = JSON.parse(localStorage.getItem('hency-blog-posts') || '[]');
+const deletedSlugs = new Set(JSON.parse(localStorage.getItem('hency-blog-deleted-posts') || '[]'));
+const savedPosts = mergePosts(sitePosts, localPosts);
 
 function escapeHtml(value) {
     return value.replace(/[&<>"']/g, (character) => ({
@@ -319,6 +323,21 @@ function escapeHtml(value) {
         '"': '&quot;',
         "'": '&#39;',
     }[character]));
+}
+
+function mergePosts(basePosts, overridePosts) {
+    const postsBySlug = new Map();
+    basePosts.forEach((post) => {
+        if (!deletedSlugs.has(post.slug)) {
+            postsBySlug.set(post.slug, post);
+        }
+    });
+    overridePosts.forEach((post) => {
+        if (!deletedSlugs.has(post.slug)) {
+            postsBySlug.set(post.slug, post);
+        }
+    });
+    return Array.from(postsBySlug.values());
 }
 
 function inlineMarkdown(value) {

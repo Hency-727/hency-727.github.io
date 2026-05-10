@@ -405,6 +405,7 @@
                 <button type="button" class="button" id="new-post">New post</button>
                 <button type="button" class="button" id="save-draft">Save draft</button>
                 <button type="button" class="button button-primary" id="publish-local">Publish local</button>
+                <button type="button" class="button" id="save-site-data">Save site data</button>
                 <button type="button" class="button" id="export-md">Export MD</button>
                 <button type="button" class="button" id="copy-html">Copy HTML</button>
             </div>
@@ -464,6 +465,7 @@
         </section>
     </main>
 
+<script src="posts-data.js"></script>
 <script>
 const fields = {
     title: document.getElementById('title'),
@@ -478,6 +480,7 @@ const statusText = document.getElementById('status');
 const postManagerList = document.getElementById('post-manager-list');
 const draftKey = 'hency-blog-draft';
 const postsKey = 'hency-blog-posts';
+const deletedPostsKey = 'hency-blog-deleted-posts';
 let slugEdited = false;
 
 function today() {
@@ -505,6 +508,42 @@ function escapeHtml(value) {
         '"': '&quot;',
         "'": '&#39;',
     }[character]));
+}
+
+function getSitePosts() {
+    return Array.isArray(window.HENCY_BLOG_POSTS) ? window.HENCY_BLOG_POSTS : [];
+}
+
+function getLocalPosts() {
+    return JSON.parse(localStorage.getItem(postsKey) || '[]');
+}
+
+function getDeletedSlugs() {
+    return JSON.parse(localStorage.getItem(deletedPostsKey) || '[]');
+}
+
+function setDeletedSlugs(slugs) {
+    localStorage.setItem(deletedPostsKey, JSON.stringify(Array.from(new Set(slugs))));
+}
+
+function mergePosts(basePosts, overridePosts) {
+    const deletedSlugs = new Set(getDeletedSlugs());
+    const postsBySlug = new Map();
+    basePosts.forEach((post) => {
+        if (!deletedSlugs.has(post.slug)) {
+            postsBySlug.set(post.slug, post);
+        }
+    });
+    overridePosts.forEach((post) => {
+        if (!deletedSlugs.has(post.slug)) {
+            postsBySlug.set(post.slug, post);
+        }
+    });
+    return Array.from(postsBySlug.values());
+}
+
+function getAllPosts() {
+    return mergePosts(getSitePosts(), getLocalPosts());
 }
 
 function inlineMarkdown(value) {
@@ -652,9 +691,10 @@ function saveDraft() {
 
 function publishLocal() {
     const post = getPost();
-    const posts = JSON.parse(localStorage.getItem(postsKey) || '[]');
+    const posts = getLocalPosts();
     const nextPosts = posts.filter((item) => item.slug !== post.slug);
     nextPosts.push(post);
+    setDeletedSlugs(getDeletedSlugs().filter((slug) => slug !== post.slug));
     localStorage.setItem(postsKey, JSON.stringify(nextPosts));
     localStorage.setItem(draftKey, JSON.stringify(post));
     renderPostManager();
@@ -662,7 +702,7 @@ function publishLocal() {
 }
 
 function renderPostManager() {
-    const posts = JSON.parse(localStorage.getItem(postsKey) || '[]')
+    const posts = getAllPosts()
         .sort((first, second) => String(second.date).localeCompare(String(first.date)));
     postManagerList.innerHTML = '';
 
@@ -691,6 +731,50 @@ function renderPostManager() {
     });
 }
 
+function downloadFile(filename, content, type) {
+    const blob = new Blob([content], { type });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(link.href);
+}
+
+function buildPostsDataContent() {
+    const posts = getAllPosts()
+        .sort((first, second) => String(second.date).localeCompare(String(first.date)));
+    return `window.HENCY_BLOG_POSTS = ${JSON.stringify(posts, null, 4)};\n`;
+}
+
+async function saveSiteData() {
+    const content = buildPostsDataContent();
+
+    if ('showSaveFilePicker' in window) {
+        try {
+            const handle = await window.showSaveFilePicker({
+                suggestedName: 'posts-data.js',
+                types: [{
+                    description: 'JavaScript data file',
+                    accept: { 'text/javascript': ['.js'] },
+                }],
+            });
+            const writable = await handle.createWritable();
+            await writable.write(content);
+            await writable.close();
+            setStatus('posts-data.js saved. Commit and push it to share these posts.');
+            return;
+        } catch (error) {
+            if (error.name === 'AbortError') {
+                setStatus('Save cancelled.');
+                return;
+            }
+        }
+    }
+
+    downloadFile('posts-data.js', content, 'text/javascript');
+    setStatus('posts-data.js downloaded. Replace the repo file with it, then commit and push.');
+}
+
 function downloadMarkdown() {
     const post = getPost();
     const frontMatter = [
@@ -701,12 +785,7 @@ function downloadMarkdown() {
         '---',
         '',
     ].join('\n');
-    const blob = new Blob([frontMatter + post.markdown], { type: 'text/markdown' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `${post.slug}.md`;
-    link.click();
-    URL.revokeObjectURL(link.href);
+    downloadFile(`${post.slug}.md`, frontMatter + post.markdown, 'text/markdown');
     setStatus('Markdown exported.');
 }
 
@@ -772,6 +851,9 @@ fields.title.addEventListener('input', () => {
 document.getElementById('new-post').addEventListener('click', clearEditor);
 document.getElementById('save-draft').addEventListener('click', saveDraft);
 document.getElementById('publish-local').addEventListener('click', publishLocal);
+document.getElementById('save-site-data').addEventListener('click', () => {
+    saveSiteData().catch(() => setStatus('Could not save posts-data.js.'));
+});
 document.getElementById('export-md').addEventListener('click', downloadMarkdown);
 document.getElementById('copy-html').addEventListener('click', () => {
     copyHtmlSnippet().catch(() => setStatus('Clipboard is not available in this browser.'));
@@ -788,9 +870,10 @@ postManagerList.addEventListener('click', (event) => {
         if (!window.confirm(`Delete "${postTitle}"?`)) {
             return;
         }
-        const posts = JSON.parse(localStorage.getItem(postsKey) || '[]');
+        const posts = getLocalPosts();
         const nextPosts = posts.filter((item) => item.slug !== slugToDelete);
         localStorage.setItem(postsKey, JSON.stringify(nextPosts));
+        setDeletedSlugs([...getDeletedSlugs(), slugToDelete]);
         if (fields.slug.value === slugToDelete) {
             clearEditor();
         }
@@ -798,7 +881,7 @@ postManagerList.addEventListener('click', (event) => {
         setStatus(`Deleted "${postTitle}".`);
         return;
     }
-    const posts = JSON.parse(localStorage.getItem(postsKey) || '[]');
+    const posts = getAllPosts();
     const post = posts.find((item) => item.slug === editButton.dataset.editPost);
     if (post) {
         slugEdited = true;
@@ -810,7 +893,7 @@ postManagerList.addEventListener('click', (event) => {
 
 const params = new URLSearchParams(window.location.search);
 const slug = params.get('slug');
-const posts = JSON.parse(localStorage.getItem(postsKey) || '[]');
+const posts = getAllPosts();
 const postFromSlug = posts.find((post) => post.slug === slug);
 const draft = JSON.parse(localStorage.getItem(draftKey) || 'null');
 
