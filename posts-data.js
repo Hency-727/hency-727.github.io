@@ -5,8 +5,17 @@ window.HENCY_BLOG_POSTS = [
         "slug": "dit-block-policy",
         "tags": "DP",
         "summary": "",
-        "markdown": "**文章标题；**The Ingredients for Robotic Diffusion Transformer\n**链接；**https://arxiv.org/pdf/2410.10088\n**网络架构；**\n![image](assets/blog_images/29.png)\n\n**注意；**\n区分 self-attention / cross-attention 的依据不是“是不是多模态”，而是：Q、K、V 是不是来自同一组 token / 同一个序列，如[image tokens, language tokens, qpos token]。\n\n\n训练：diffusion transformer\n采样：deterministic sampling | DDIM\n\n**池化：**\n![image](assets/blog_images/30.png)\n\n**什么是CLS Pooling：**\n![image](assets/blog_images/31.png)\n![image](assets/blog_images/32.png)\n\n**cross attention 和 conditioning有什么不同吗？**\nCross-attention 是 conditioning 的一种具体实现方式。conditioning 更宽泛，只要条件信息影响模型输出，都叫 conditioning。\n常见conditioning方式：\n1. concat：把 obs embedding 和 action token 拼一起\n2. add：把 condition embedding 加到 token 上\n3. FiLM / adaLN：用 condition 生成 scale / shift 调制网络\n4. cross-attention：action token 读取 obs tokens\n5. prefix tokens：把 condition 当作前缀 token 放进序列\n![image](assets/blog_images/33.png)\n![image](assets/blog_images/34.png)\n![image](assets/blog_images/35.png)\n\n**concat vs prefix tokens：**\nconcat：每个 action token 背后都直接贴上条件向量，如[a0;c], [a1;c], [a2;c]\nprefix tokens：条件是单独的 token，action token 通过 attention 去看它，如[c, a0, a1, a2]\n\n",
-        "updatedAt": "2026-05-11T04:48:29.717Z"
+        "markdown": "**文章标题；**The Ingredients for Robotic Diffusion Transformer\n**链接；**https://arxiv.org/pdf/2410.10088\n**网络架构；**\n![image](assets/blog_images/29.png)\n\n**注意；**\n区分 self-attention / cross-attention 的依据不是“是不是多模态”，而是：Q、K、V 是不是来自同一组 token / 同一个序列，如[image tokens, language tokens, qpos token]。\n\n\n训练：diffusion transformer\n采样：deterministic sampling | DDIM\n\n**池化：**\n![image](assets/blog_images/30.png)\n\n**什么是CLS Pooling：**\n![image](assets/blog_images/31.png)\n![image](assets/blog_images/32.png)",
+        "updatedAt": "2026-05-11T05:08:00.099Z"
+    },
+    {
+        "title": "5 conditioning methods",
+        "date": "2026-05-11",
+        "slug": "5-conditioning-methods",
+        "tags": "learning notes",
+        "summary": "",
+        "markdown": "**常见conditioning方式：**\n1. concat：把 obs embedding 和 action token 拼一起\n2. add：把 condition embedding 加到 token 上\n3. FiLM / adaLN：用 condition 生成 scale / shift 调制网络\n4. cross-attention：action token 读取 obs tokens\n5. prefix tokens：把 condition 当作前缀 token 放进序列\n![image](assets/blog_images/33.png)\n![image](assets/blog_images/34.png)\n![image](assets/blog_images/35.png)\n\n**concat vs prefix tokens：**\nconcat：每个 action token 背后都直接贴上条件向量，如[a0;c], [a1;c], [a2;c]\nprefix tokens：条件是单独的 token，action token 通过 attention 去看它，如[c, a0, a1, a2]\n\n**cross attention 和 conditioning有什么不同吗？**\nCross-attention 是 conditioning 的一种具体实现方式。conditioning 更宽泛，只要条件信息影响模型输出，都叫 conditioning。\n\n",
+        "updatedAt": "2026-05-11T05:08:39.443Z"
     },
     {
         "title": "Diffusion Policy",
