@@ -1,12 +1,21 @@
 window.HENCY_BLOG_POSTS = [
     {
+        "title": "DiT-Block Policy",
+        "date": "2026-05-11",
+        "slug": "dit-block-policy",
+        "tags": "DP",
+        "summary": "",
+        "markdown": "**文章标题；**The Ingredients for Robotic Diffusion Transformer\n**链接；**https://arxiv.org/pdf/2410.10088\n**网络架构；**\n![image](assets/blog_images/29.png)\n\n**注意；**\n区分 self-attention / cross-attention 的依据不是“是不是多模态”，而是：Q、K、V 是不是来自同一组 token / 同一个序列，如[image tokens, language tokens, qpos token]。\n\n\n训练：diffusion transformer\n采样：deterministic sampling | DDIM\n\n**池化：**\n![image](assets/blog_images/30.png)\n\n**什么是CLS Pooling：**\n![image](assets/blog_images/31.png)\n![image](assets/blog_images/32.png)\n\n**cross attention 和 conditioning有什么不同吗？**\nCross-attention 是 conditioning 的一种具体实现方式。conditioning 更宽泛，只要条件信息影响模型输出，都叫 conditioning。\n常见conditioning方式：\n1. concat：把 obs embedding 和 action token 拼一起\n2. add：把 condition embedding 加到 token 上\n3. FiLM / adaLN：用 condition 生成 scale / shift 调制网络\n4. cross-attention：action token 读取 obs tokens\n5. prefix tokens：把 condition 当作前缀 token 放进序列\n![image](assets/blog_images/33.png)\n![image](assets/blog_images/34.png)\n![image](assets/blog_images/35.png)\n\n**concat vs prefix tokens：**\nconcat：每个 action token 背后都直接贴上条件向量，如[a0;c], [a1;c], [a2;c]\nprefix tokens：条件是单独的 token，action token 通过 attention 去看它，如[c, a0, a1, a2]\n\n",
+        "updatedAt": "2026-05-11T04:48:29.717Z"
+    },
+    {
         "title": "Diffusion Policy",
         "date": "2026-05-10",
         "slug": "diffusion-policy",
         "tags": "DP",
         "summary": "",
-        "markdown": "**标题：**Diffusion Policy: Visuomotor Policy Learning via Action Diffusion\n\n**链接：**https://arxiv.org/pdf/2303.04137\n\n![image](assets/blog_images/1.png)\n\n为什么这里action horizon可以影响trade-off between responsiveness and temporal consistancy?\n需要清楚，action horizon越小，比如说1，此时就不是action chunkings output了，当然会影响动作连贯性；action horizon越大，相比于小的horizon推理的时间会更长，responsiveness就低一些。\n\n**Temporal Action Consistancy**：动作序列在时间维度上的连贯性\n\n",
-        "updatedAt": "2026-05-10T05:33:59.314Z"
+        "markdown": "**标题：**Diffusion Policy: Visuomotor Policy Learning via Action Diffusion\n\n**链接：**https://arxiv.org/pdf/2303.04137\n\n**网络架构：**\n![image](assets/blog_images/36.png)\n当 diffusion 生成的是图像时，denoiser 要处理高维空间结构，所以常用 U-Net 或 DiT；当 diffusion 生成的是低维动作序列时，denoiser 只需要处理动作时间序列，所以可以用 1D CNN 或 Transformer。图像观测只是条件输入，通常先由视觉编码器提成特征。\n\n为什么这里action horizon可以影响trade-off between responsiveness and temporal consistancy?\n需要清楚，action horizon越小，比如说1，此时就不是action chunkings output了，当然会影响动作连贯性；action horizon越大，相比于小的horizon推理的时间会更长，responsiveness就低一些。\n![image](assets/blog_images/1.png)\n**Temporal Action Consistancy**：动作序列在时间维度上的连贯性。\n\n**DDPM 全称：**\nDenoising Diffusion Probabilistic Models|去噪扩散概率模型\n**DDIM 全称：**\nDenoising Diffusion Implicit Models | 去噪扩散隐式模型\n真实机器人实验中训练用了 100 个 training diffusion iterations，但用 DDIM 把 inference iterations 降到 16 来减少延迟\n\n```bash\nDDPM：学会怎么一步步去噪 | 训练\nDDIM：推理时少走几步、跳着去噪 | 采样\nDiffusion Policy：把这个过程放到 action chunk 上\n```\n\n",
+        "updatedAt": "2026-05-11T04:57:02.804Z"
     },
     {
         "title": "π0",
