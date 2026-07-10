@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+    <title id="title">SZTU Yi Ji Zhi Chang logo</title>
+    <desc id="desc">A simple square logo with Chinese text Yi Ji Zhi Chang.</desc>
+    <rect x="54" y="54" width="404" height="404" rx="74" fill="#fffdf8" stroke="#ddd4c3" stroke-width="8"/>
+    <rect x="74" y="74" width="364" height="364" rx="58" fill="#ffffff" stroke="#f3efe3" stroke-width="4"/>
+    <text x="256" y="214" text-anchor="middle" font-family="KaiTi, STKaiti, SimSun, serif" font-size="116" font-weight="700" fill="#111419">一技</text>
+    <text x="256" y="340" text-anchor="middle" font-family="KaiTi, STKaiti, SimSun, serif" font-size="116" font-weight="700" fill="#111419">之长</text>
+</svg>
