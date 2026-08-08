@@ -328,6 +328,121 @@ p {
     background: #fff;
 }
 
+.project-showcase {
+    align-items: center;
+}
+
+.project-carousel {
+    min-width: 0;
+}
+
+.project-carousel__viewport {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    border: 1px solid #ddd4c3;
+    background: #111;
+}
+
+.project-carousel__slide,
+.project-carousel__video {
+    width: 100%;
+    height: 100%;
+}
+
+.project-carousel__slide[hidden] {
+    display: none;
+}
+
+.project-carousel__video {
+    display: block;
+    object-fit: contain;
+    background: #111;
+}
+
+.project-carousel__button {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    border-radius: 50%;
+    background: rgba(17, 23, 34, 0.72);
+    color: #fff;
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.project-carousel__button::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+}
+
+.project-carousel__button--previous::before {
+    margin-right: 3px;
+    border-right: 11px solid currentColor;
+}
+
+.project-carousel__button--next::before {
+    margin-left: 3px;
+    border-left: 11px solid currentColor;
+}
+
+.project-carousel__button:hover,
+.project-carousel__button:focus-visible {
+    background: rgba(26, 95, 208, 0.92);
+    transform: translateY(-50%) scale(1.06);
+}
+
+.project-carousel__button--previous {
+    left: 12px;
+}
+
+.project-carousel__button--next {
+    right: 12px;
+}
+
+.project-carousel__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 9px;
+}
+
+.project-carousel__status {
+    font-size: 12px;
+    color: #666;
+}
+
+.project-carousel__dots {
+    display: flex;
+    gap: 7px;
+}
+
+.project-carousel__dot {
+    width: 9px;
+    height: 9px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #b9b1a3;
+    cursor: pointer;
+}
+
+.project-carousel__dot.is-active {
+    background: #1a5fd0;
+}
+
 .pub-image {
     aspect-ratio: 7 / 4;
     object-fit: cover;
@@ -689,6 +804,22 @@ html[data-theme="dark"] .pub-video {
     background: #171d25;
 }
 
+html[data-theme="dark"] .project-carousel__viewport {
+    border-color: #2c3642;
+}
+
+html[data-theme="dark"] .project-carousel__status {
+    color: #aeb8c4;
+}
+
+html[data-theme="dark"] .project-carousel__dot {
+    background: #657181;
+}
+
+html[data-theme="dark"] .project-carousel__dot.is-active {
+    background: #7ac7ff;
+}
+
 html[data-theme="dark"] .wechat-modal-backdrop {
     background: rgba(4, 6, 10, 0.72);
 }
@@ -740,5 +871,10 @@ html[data-theme="dark"] .comments-host {
 
     .publication {
         grid-template-columns: 1fr;
+    }
+
+    .project-carousel__button {
+        width: 38px;
+        height: 38px;
     }
 }
