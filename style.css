@@ -112,8 +112,10 @@ html[data-theme="dark"] .theme-icon-dark {
 }
 
 #content {
-    max-width: 900px;
-    margin-left: 260px;
+    box-sizing: border-box;
+    width: calc(100% - 240px);
+    max-width: 1440px;
+    margin-left: max(240px, calc((100vw - 1200px) / 2));
     padding: 40px;
 }
 
@@ -744,6 +746,8 @@ html[data-theme="dark"] .comments-host {
     }
 
     #content {
+        width: 100%;
+        max-width: none;
         margin-left: 0;
         padding: 24px;
     }
